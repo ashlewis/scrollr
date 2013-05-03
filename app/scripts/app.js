@@ -4,7 +4,6 @@ define(['jquery', 'jqueryui', 'baseline', 'waitForImages'], function ($) {
 
 var
       HIGHLIGHT_CLASS = 'candidate-node-highlight',
-      DRAGGING_CLASS = 'dragging',
       CANDIDATE_NODE_TYPES = 'div, article, main, aside',
       CANDIDATE_NODES_LIMIT = 10,
 
@@ -21,7 +20,9 @@ var
         upButton:false,
         downButton:false,
         nudgeUpButton:false,
-        nudgeDownButton:false
+        nudgeDownButton:false,
+        spinUpButton:false,
+        spinDownButton:false
       },
 
       originalBodyHTML = '',
@@ -82,7 +83,7 @@ var
           return DOM.nudgeUpButton;
         }
 
-        return createButton('arrow-up nudge', scrollUp, /*DOM.page.lineHeight*/32);
+        return createButton('step-backward', scrollUp, /*DOM.page.lineHeight*/32);
       },
 
        /**
@@ -94,7 +95,32 @@ var
           return DOM.nudgeDownButton;
         }
 
-        return createButton('arrow-down nudge', scrollDown, /*DOM.page.lineHeight*/32);
+        return createButton('step-forward', scrollDown, /*DOM.page.lineHeight*/32);
+      },
+
+
+       /**
+      *
+      */
+      getSpinUpButton = function(){
+
+        if (DOM.spinUpButton) {
+          return DOM.spinUp;
+        }
+
+        return createButton('fast-backward', scrollUp, 1000000);
+      },
+
+       /**
+      *
+      */
+      getSpinDownButton = function(){
+
+        if (DOM.spinDown) {
+          return DOM.spinDown;
+        }
+
+        return createButton('fast-forward', scrollDown,  1000000);
       },
 
 
@@ -188,19 +214,15 @@ var
         DOM.page.addEventListener('mousewheel', wheelMove);
         document.body.addEventListener('keydown', keyPress);
 
-        //DOM.viewportResizerTop.addEventListener('dragstart', dragStart, false);
-        //DOM.viewportResizerBottom.addEventListener('dragstart', dragStart, false);
-
         DOM.page.addEventListener('dragover', dragOver, false);
-        //DOM.page.addEventListener('drop', drop, false);
+
       },
 
       /**
       *
       */
       snap = function(yCoOrd){
-        //@todo: use line height (for some reason i cant get any styles here
-           return (Math.round((yCoOrd / DOM.page.lineHeight)) * DOM.page.lineHeight);
+        return (Math.round((yCoOrd / DOM.page.lineHeight)) * DOM.page.lineHeight);
       },
 
       /**
@@ -271,8 +293,13 @@ var
           DOM.nudgeDownButton = getNudgeDownButton();
           DOM.viewport.appendChild(DOM.nudgeDownButton);
 
-          DOM.page.appendChild(DOM.viewport);
+          DOM.spinUpButton = getSpinUpButton();
+          DOM.viewport.appendChild(DOM.spinUpButton);
 
+          DOM.spinDownButton = getSpinDownButton();
+          DOM.viewport.appendChild(DOM.spinDownButton);
+
+          DOM.page.appendChild(DOM.viewport);
 
           originalBodyHTML = DOM.body.innerHTML;
           DOM.body.innerHTML = '';
@@ -281,14 +308,9 @@ var
 
           DOM.page.lineHeight = getLineHeight();
 
-         // $('img').baseline(DOM.page.lineHeight);
-
           $(document).waitForImages($.noop, function () {
                 $(this).baseline(DOM.page.lineHeight);
             });
-
-          //baseline.init('img', DOM.page.lineHeight);
-
 
           $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
             DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
@@ -318,10 +340,8 @@ var
           });
 
           return false;
-          //e.preventDefault();
-          //e.stopPropagation();
-
       },
+
       /**
       *
       */
@@ -338,6 +358,12 @@ var
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
 
+        if (distance + window.innerHeight > DOM.page.clientHeight) {
+            DOM.viewport.style.height = 'auto';
+            $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
+                DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
+            });
+        }
       },
 
       /**
@@ -348,6 +374,13 @@ var
         var distance = (typeof distance === "undefined") ? snap(DOM.body.scrollTop - DOM.viewport.clientHeight) : snap(DOM.body.scrollTop - distance);
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
+
+        if (distance < 0) {
+            DOM.viewport.style.height = 'auto';
+            $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
+                DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
+            });
+        }
 
       },
 
@@ -370,8 +403,7 @@ var
       */
       wheelMoveProcess = function(){
          var e = window.event || e,
-            delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail))),
-            interval;
+            delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 
         scrollFlag = 1;
 
@@ -442,13 +474,6 @@ var
         }
       },
 
-      /**
-      *
-      */
-      dragStart = function(e) {
-
-        return false;
-      },
 
     /**
       *
@@ -483,16 +508,6 @@ var
            resize(e);
         }
 
-        return false;
-      },
-
-
-      /**
-      *
-      */
-      drop = function(e) {
-
-        DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
         return false;
       },
 

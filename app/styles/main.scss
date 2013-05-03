@@ -26,7 +26,7 @@
 
     min-width:22em;
     max-width:37em;
-    padding: $offset $defaultLineHeight;
+    padding: $offset $defaultLineHeight ($offset + $defaultLineHeight) $defaultLineHeight;
     margin:0 auto;
 
     @import "verticalRhythm";    
@@ -71,33 +71,55 @@
       }
 
       .arrow-up{
-
         position:absolute;
-
         bottom:-2.5em;
-        right:0;
+        right:1.5em;
       }
 
       .arrow-down{
-
         position:absolute;
-
         bottom:-5em;
-        right:0;
+        right:1.5em;
       }
 
-      .nudge{
+      .step-backward{
+        position:absolute;
+        -webkit-transform:rotate(90deg);
+        bottom:-3.25em;
+        right:4.5em;
         font-size:.75em;
         line-height:.75em;
-        right:2.5em;
+        
       }
 
-      .nudge.arrow-up{
-        bottom:-3.25em;
-      }
-
-      .nudge.arrow-down{
+      .step-forward{
+        position:absolute;
+        -webkit-transform:rotate(90deg);
         bottom:-5em;
+        right:4.5em;
+        font-size:.75em;
+        line-height:.75em;
+
+      }
+
+      .fast-backward{
+        position:absolute;
+        -webkit-transform:rotate(90deg);
+        bottom:-2em;
+        right:.5em;
+        font-size:.75em;
+        line-height:.75em;
+
+      }
+
+      .fast-forward{
+        position:absolute;
+        -webkit-transform:rotate(90deg);
+        bottom:-6.5em;
+        right:.5em;
+        font-size:.75em;
+        line-height:.75em;
+
       }
 
     .viewport{
@@ -152,7 +174,7 @@
     position: relative;
     background: fade-out(darken($background,50), .8);
     overflow:hidden;
-    cursor:-webkit-zoom-in;
+    cursor:crosshair;
     outline:1px dashed darken($background,50);
 }
 

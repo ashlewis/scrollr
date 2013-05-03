@@ -1,0 +1,351 @@
+@charset "UTF-8";
+@import url(http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css);
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_raw\.scss}line{font-family:\000034}}
+main {
+  float: left;
+  width: 75%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_raw\.scss}line{font-family:\000038}}
+aside {
+  width: 25%;
+  float: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_raw\.scss}line{font-family:\0000313}}
+body {
+  padding: 0;
+  margin: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\0000318}}
+.page {
+  /* http://meyerweb.com/eric/tools/css/reset/
+     v2.0 | 20110126
+     License: none (public domain)
+  */
+  /* HTML5 display-role reset for older browsers */
+  font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  min-width: 22em;
+  max-width: 37em;
+  padding: 96px 32px;
+  margin: 0 auto;
+  color: #444444;
+  background: #fefefe;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_reset\.scss}line{font-family:\0000318}}
+.page div, .page span, .page applet, .page object, .page iframe,
+.page h1, .page h2, .page h3, .page h4, .page h5, .page h6, .page p, .page blockquote, .page pre,
+.page a, .page abbr, .page acronym, .page address, .page big, .page cite, .page code,
+.page del, .page dfn, .page em, .page img, .page ins, .page kbd, .page q, .page s, .page samp,
+.page small, .page strike, .page strong, .page sub, .page sup, .page tt, .page var,
+.page b, .page u, .page i, .page center,
+.page dl, .page dt, .page dd, .page ol, .page ul, .page li,
+.page fieldset, .page form, .page label, .page legend,
+.page table, .page caption, .page tbody, .page tfoot, .page thead, .page tr, .page th, .page td,
+.page article, .page aside, .page canvas, .page details, .page embed,
+.page figure, .page figcaption, .page footer, .page header, .page hgroup,
+.page menu, .page nav, .page output, .page ruby, .page section, .page summary,
+.page time, .page mark, .page audio, .page video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_reset\.scss}line{font-family:\0000328}}
+.page article, .page aside, .page details, .page figcaption, .page figure,
+.page footer, .page header, .page hgroup, .page menu, .page nav, .page section {
+  display: block;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_reset\.scss}line{font-family:\0000331}}
+.page ol, .page ul {
+  list-style: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_reset\.scss}line{font-family:\0000334}}
+.page blockquote, .page q {
+  quotes: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_reset\.scss}line{font-family:\0000338}}
+.page blockquote:before, .page blockquote:after,
+.page q:before, .page q:after {
+  content: '';
+  content: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_reset\.scss}line{font-family:\0000342}}
+.page table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\000036}}
+.page h1 {
+  font-size: 45.7px;
+  line-height: 64px;
+  margin-top: 32px;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000313}}
+.page h2 {
+  font-size: 34.3px;
+  line-height: 64px;
+  margin-top: 32px;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000318}}
+.page h3 {
+  font-size: 22.9px;
+  line-height: 32px;
+  margin-top: 32px;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000323}}
+.page h4 {
+  font-size: 20px;
+  line-height: 32px;
+  margin-top: 32px;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000328}}
+.page p {
+  font-size: 20px;
+  line-height: 32px;
+  margin-top: 32px;
+  margin-bottom: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000332}}
+.page p + p {
+  text-indent: 32px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000335}}
+.page a {
+  color: #428bca;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000337}}
+.page a:hover {
+  color: #2a6496;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000340}}
+.page a:active {
+  color: #193c5a;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000343}}
+.page a:visited {
+  color: #7eb0db;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000347}}
+.page img {
+  margin: 0 auto 32px auto;
+  display: block;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000352}}
+.page ol, .page ul {
+  font-size: 20px;
+  line-height: 32px;
+  margin-top: 32px;
+  margin-bottom: 0;
+  list-style: disc;
+  padding-left: 20px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000358}}
+.page blockquote {
+  position: relative;
+  font-size: 20px;
+  line-height: 32px;
+  margin-top: 32px;
+  margin-bottom: 0;
+  text-indent: 32px;
+  padding-left: 32px;
+  margin-right: 32px;
+  border-left: 3px solid #444444;
+  font-style: italic;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000366}}
+.page blockquote:before {
+  font-size: 80px;
+  line-height: 96px;
+  margin-top: 32px;
+  margin-bottom: 0;
+  position: absolute;
+  top: -48px;
+  left: -16px;
+  content: "“";
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000375}}
+.page dl {
+  font-size: 20px;
+  line-height: 32px;
+  margin-top: 32px;
+  margin-bottom: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000378}}
+.page dt {
+  font-weight: bold;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000381}}
+.page dd {
+  padding-left: 20px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000385}}
+.page table {
+  max-width: 100%;
+  background-color: #fefefe;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-top: 32px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\0000396}}
+.page table {
+  width: 100%;
+  margin-bottom: 32px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\00003101}}
+.page table th,
+.page table td {
+  box-sizing: border-box;
+  line-height: 32px;
+  text-align: left;
+  vertical-align: top;
+  padding-left: 32px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\00003108}}
+.page table th {
+  font-weight: bold;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\00003112}}
+.page table thead th {
+  vertical-align: bottom;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\00003117}}
+.page table .table {
+  background-color: #fefefe;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\00003123}}
+.page table tbody > tr:nth-child(odd) > td,
+.page table tbody > tr:nth-child(odd) > th {
+  background-color: #e5e5e5;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_verticalRhythm\.scss}line{font-family:\00003130}}
+.page table tbody tr:hover > td,
+.page table tbody tr:hover > th {
+  background-color: #cbcbcb;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\0000344}}
+.page .button {
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 999;
+  padding: 5px;
+  margin: 2px;
+  color: #bada55;
+  background: #fefefe;
+  font-family: FontAwesome;
+  text-decoration: none;
+  -webkit-user-select: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\0000358}}
+.page .button:hover {
+  background: #f1f1f1;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\0000365}}
+.page .remove {
+  position: absolute;
+  top: -2.5em;
+  right: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\0000373}}
+.page .arrow-up {
+  position: absolute;
+  bottom: -2.5em;
+  right: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\0000381}}
+.page .arrow-down {
+  position: absolute;
+  bottom: -5em;
+  right: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\0000389}}
+.page .nudge {
+  font-size: .75em;
+  line-height: .75em;
+  right: 2.5em;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\0000395}}
+.page .nudge.arrow-up {
+  bottom: -3.25em;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\0000399}}
+.page .nudge.arrow-down {
+  bottom: -5em;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\00003103}}
+.page .viewport {
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 3px solid #e5e5e5;
+  border-bottom: 3px solid #e5e5e5;
+  outline: 9999px solid rgba(254, 254, 254, 0.9);
+  background: transparent;
+  overflow: visible;
+  pointer-events: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\00003120}}
+.page .viewport.dragging {
+  border: 2px dotted #191919;
+  background: rgba(127, 127, 127, 0.2);
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\00003127}}
+.page .viewport-resizer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  height: 32px;
+  pointer-events: auto;
+  cursor: row-resize !important;
+  text-align: center;
+  color: #bada55;
+  font-weight: bold;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\00003139}}
+.page .viewport-resizer-top {
+  top: -1.85em;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\00003143}}
+.page .viewport-resizer-bottom {
+  bottom: -1.5em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/main\.scss}line{font-family:\00003151}}
+.candidate-node-highlight {
+  position: relative;
+  background: rgba(127, 127, 127, 0.2);
+  overflow: hidden;
+  cursor: -webkit-zoom-in;
+  outline: 1px dashed #7f7f7f;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_utilities\.scss}line{font-family:\000038}}
+.cf:before,
+.cf:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/sandbox\/scrollr\/app\/styles\/_utilities\.scss}line{font-family:\0000313}}
+.cf:after {
+  clear: both;
+}

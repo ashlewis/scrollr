@@ -1,0 +1,160 @@
+@import "raw";
+@import "fonts";
+@import "variables";
+@import "mixins";
+
+
+
+
+
+
+
+
+//--------------------
+// READING MODE
+//--------------------
+
+//
+.page{
+
+    @import "reset";
+
+    font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+    font-weight: 400;
+    font-size: $defaultFontSize;
+    line-height: $defaultLineHeight;
+
+    min-width:22em;
+    max-width:37em;
+    padding: $offset $defaultLineHeight;
+    margin:0 auto;
+
+    @import "verticalRhythm";    
+    
+
+    
+
+    color: $color;
+    background:$background;
+
+    // debug: uncomment for lines
+//background-image:linear-gradient(darken($background,10) .1em, transparent .1em);
+//background-size: 100% $defaultLineHeight;
+
+      .button{
+
+        pointer-events:auto;
+        cursor:pointer;
+
+        z-index:999;
+        padding:5px;
+        margin:2px;
+        color:$highlight;
+        background:$background;
+
+        font-family: FontAwesome;
+        text-decoration:none;
+
+        &:hover{
+          background:darken($background,5);
+        }
+
+        -webkit-user-select: none;
+      }
+
+      .remove{
+
+        position:absolute;
+
+        top:-2.5em;
+        right:0;
+      }
+
+      .arrow-up{
+
+        position:absolute;
+
+        bottom:-2.5em;
+        right:0;
+      }
+
+      .arrow-down{
+
+        position:absolute;
+
+        bottom:-5em;
+        right:0;
+      }
+
+      .nudge{
+        font-size:.75em;
+        line-height:.75em;
+        right:2.5em;
+      }
+
+      .nudge.arrow-up{
+        bottom:-3.25em;
+      }
+
+      .nudge.arrow-down{
+        bottom:-5em;
+      }
+
+    .viewport{
+        box-sizing: border-box;
+        position:fixed;
+        top:0;
+        left:0;
+        bottom:0;
+        width:100%;
+        border-top:3px solid darken($background,10);
+        border-bottom:3px solid darken($background,10);
+        outline: 9999px solid fade-out($background,.1);
+
+        background:transparent;
+
+        overflow:visible;
+
+        pointer-events:none;
+
+        &.dragging{
+           border:2px dotted darken($background,90);
+           background:fade-out(darken($background,50), .8);
+        }
+
+    }
+
+    .viewport-resizer{
+        position:absolute;
+        width:100%;
+        left:0;
+        height:$defaultLineHeight;
+        pointer-events:auto;
+        cursor:row-resize !important;
+        text-align:center;
+        color:$highlight;
+        font-weight:bold;
+    }
+
+    .viewport-resizer-top{
+        top:-1.85em;
+    }
+
+    .viewport-resizer-bottom{
+        bottom:-1.5em;
+
+    }
+
+}
+
+
+.candidate-node-highlight{
+    position: relative;
+    background: fade-out(darken($background,50), .8);
+    overflow:hidden;
+    cursor:-webkit-zoom-in;
+    outline:1px dashed darken($background,50);
+}
+
+
+@import "utilities";

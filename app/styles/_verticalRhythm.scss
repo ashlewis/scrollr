@@ -1,0 +1,136 @@
+// vertical rhythym
+  //--------------------
+    
+
+
+    h1{
+
+      @include font(2.285);
+      font-weight: 600;
+
+    }
+
+    h2{
+     @include font(1.715);
+      font-weight: 600;
+    }
+
+    h3{
+      @include font(1.145);
+      font-weight: 600;
+    }
+
+    h4{
+      @include font();
+      font-weight: 600;
+    }
+
+    p{
+      @include font();
+    }
+
+    p + p{
+      text-indent: $defaultLineHeight;
+    }
+    a{
+      color:$linkColor;
+      &:hover{
+        color:darken($linkColor, 15);
+      }
+      &:active{
+        color:darken($linkColor, 30);
+      }
+      &:visited{
+        color:lighten($linkColor, 15);
+      }
+    }
+    img{
+      margin:0 auto $defaultLineHeight auto;
+      display:block;
+    }
+
+    ol, ul{
+      @include font();
+      list-style: disc;
+      padding-left:$defaultFontSize;
+    }
+
+    blockquote{
+      position:relative;
+      @include font();
+      text-indent: $defaultLineHeight;
+      padding-left:$defaultLineHeight;
+      margin-right:$defaultLineHeight;
+      border-left:3px solid $color;
+      font-style:italic;
+      &:before{
+        @include font(4);
+        position:absolute;
+        top:-$defaultLineHeight*3/2;
+        left:-$defaultLineHeight/2;
+        content:"“";
+      }
+    }
+
+    dl{
+      @include font();
+    }
+    dt{
+      font-weight:bold;
+    }
+    dd{
+       padding-left:$defaultFontSize;
+    }
+
+    table {
+  max-width: 100%;
+  background-color: $background;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-top:$defaultLineHeight;
+}
+
+// BASELINE STYLES
+// ---------------
+
+table {
+  width: 100%;
+  margin-bottom: $defaultLineHeight;
+  // Cells
+  th,
+  td {
+    box-sizing: border-box;
+    line-height: $defaultLineHeight;
+    text-align: left;
+    vertical-align: top;
+    padding-left:$defaultLineHeight;
+  }
+  th {
+    font-weight: bold;
+  }
+  // Bottom align for column headings
+  thead th {
+    vertical-align: bottom;
+  }
+
+  // Nesting
+  .table {
+    background-color: $background;
+  }
+
+  tbody {
+    > tr:nth-child(odd) > td,
+    > tr:nth-child(odd) > th {
+      background-color: darken($background, 10);
+    }
+  }
+
+  tbody {
+    tr:hover > td,
+    tr:hover > th {
+      background-color: darken($background, 20);
+    }
+  }
+}
+
+

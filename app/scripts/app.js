@@ -19,8 +19,8 @@ var
         viewportResizerBottom: false,
         upButton:false,
         downButton:false,
-        nudgeUpButton:false,
-        nudgeDownButton:false,
+        stepUpButton:false,
+        stepDownButton:false,
         spinUpButton:false,
         spinDownButton:false
       },
@@ -29,6 +29,9 @@ var
 
       scrollFlag = 0,
 
+      /**
+      *
+      */
       createButton = function(type, clickHandler, args){
         var link = document.createElement('a'),
             icon = document.createElement('i');
@@ -77,25 +80,25 @@ var
        /**
       *
       */
-      getNudgeUpButton = function(){
+      getStepUpButton = function(){
 
-        if (DOM.nudgeUpButton) {
-          return DOM.nudgeUpButton;
+        if (DOM.stepUpButton) {
+          return DOM.stepUpButton;
         }
 
-        return createButton('step-backward', scrollUp, /*DOM.page.lineHeight*/32);
+        return createButton('arrow-up step-up', scrollUp, /*DOM.page.lineHeight*/32);
       },
 
        /**
       *
       */
-      getNudgeDownButton = function(){
+      getStepDownButton = function(){
 
-        if (DOM.nudgeDownButton) {
-          return DOM.nudgeDownButton;
+        if (DOM.stepDownButton) {
+          return DOM.stepDownButton;
         }
 
-        return createButton('step-forward', scrollDown, /*DOM.page.lineHeight*/32);
+        return createButton('arrow-down step-down', scrollDown, /*DOM.page.lineHeight*/32);
       },
 
 
@@ -268,13 +271,12 @@ var
       */
       readingModeOn = function(e){
 
-          var top, origHeight, newHeight, ratio;
-
-          top = document.body.scrollTop;
-          origHeight = this.clientHeight;
+          addClass(e.srcElement, 'target');
 
           DOM.page = getPage();
           DOM.page.innerHTML = this.innerHTML;
+
+          removeClass(e.srcElement, 'target');
 
           DOM.viewport = getViewport();
 
@@ -287,39 +289,39 @@ var
           DOM.downButton = getDownButton();
           DOM.viewport.appendChild(DOM.downButton);
 
-          DOM.nudgeUpButton = getNudgeUpButton();
-          DOM.viewport.appendChild(DOM.nudgeUpButton);
+          DOM.stepUpButton = getStepUpButton();
+          DOM.viewport.appendChild(DOM.stepUpButton);
 
-          DOM.nudgeDownButton = getNudgeDownButton();
-          DOM.viewport.appendChild(DOM.nudgeDownButton);
+          DOM.stepDownButton = getStepDownButton();
+          DOM.viewport.appendChild(DOM.stepDownButton);
 
-          DOM.spinUpButton = getSpinUpButton();
-          DOM.viewport.appendChild(DOM.spinUpButton);
+         // DOM.spinUpButton = getSpinUpButton();
+         // DOM.viewport.appendChild(DOM.spinUpButton);
 
-          DOM.spinDownButton = getSpinDownButton();
-          DOM.viewport.appendChild(DOM.spinDownButton);
+        //  DOM.spinDownButton = getSpinDownButton();
+        // DOM.viewport.appendChild(DOM.spinDownButton);
 
           DOM.page.appendChild(DOM.viewport);
 
           originalBodyHTML = DOM.body.innerHTML;
           DOM.body.innerHTML = '';
 
-          DOM.body.appendChild(DOM.page);
+          DOM.body.appendChild(DOM.page);          
 
           DOM.page.lineHeight = getLineHeight();
 
           $(document).waitForImages($.noop, function () {
                 $(this).baseline(DOM.page.lineHeight);
+                // @todo: why is this not the same as jquery version below??
+                // console.log(getOffset(document.querySelector('.target')).top);
+                DOM.body.scrollTop = snap($('.target').offset().top);
             });
 
           $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
             DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
           });
 
-          newHeight = DOM.page.clientHeight;
-          ratio = newHeight/origHeight;
-
-          DOM.body.scrollTop = snap(top*ratio + getOffset(DOM.viewport).top);
+          
 
           addReadingModeEventListeners();
 

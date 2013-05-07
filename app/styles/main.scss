@@ -82,9 +82,7 @@
         right:1.5em;
       }
 
-      .step-backward{
-        position:absolute;
-        -webkit-transform:rotate(90deg);
+      .step-up{
         bottom:-3.25em;
         right:4.5em;
         font-size:.75em;
@@ -92,9 +90,7 @@
         
       }
 
-      .step-forward{
-        position:absolute;
-        -webkit-transform:rotate(90deg);
+      .step-down{
         bottom:-5em;
         right:4.5em;
         font-size:.75em;

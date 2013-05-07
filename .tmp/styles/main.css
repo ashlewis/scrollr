@@ -273,24 +273,20 @@ body {
   right: 1.5em;
 }
 /* line 85, ../../app/styles/main.scss */
-.page .step-backward {
-  position: absolute;
-  -webkit-transform: rotate(90deg);
+.page .step-up {
   bottom: -3.25em;
   right: 4.5em;
   font-size: .75em;
   line-height: .75em;
 }
-/* line 95, ../../app/styles/main.scss */
-.page .step-forward {
-  position: absolute;
-  -webkit-transform: rotate(90deg);
+/* line 93, ../../app/styles/main.scss */
+.page .step-down {
   bottom: -5em;
   right: 4.5em;
   font-size: .75em;
   line-height: .75em;
 }
-/* line 105, ../../app/styles/main.scss */
+/* line 101, ../../app/styles/main.scss */
 .page .fast-backward {
   position: absolute;
   -webkit-transform: rotate(90deg);
@@ -299,7 +295,7 @@ body {
   font-size: .75em;
   line-height: .75em;
 }
-/* line 115, ../../app/styles/main.scss */
+/* line 111, ../../app/styles/main.scss */
 .page .fast-forward {
   position: absolute;
   -webkit-transform: rotate(90deg);
@@ -308,7 +304,7 @@ body {
   font-size: .75em;
   line-height: .75em;
 }
-/* line 125, ../../app/styles/main.scss */
+/* line 121, ../../app/styles/main.scss */
 .page .viewport {
   box-sizing: border-box;
   position: fixed;
@@ -323,12 +319,12 @@ body {
   overflow: visible;
   pointer-events: none;
 }
-/* line 142, ../../app/styles/main.scss */
+/* line 138, ../../app/styles/main.scss */
 .page .viewport.dragging {
   border: 2px dotted #191919;
   background: rgba(127, 127, 127, 0.2);
 }
-/* line 149, ../../app/styles/main.scss */
+/* line 145, ../../app/styles/main.scss */
 .page .viewport-resizer {
   position: absolute;
   width: 100%;
@@ -340,16 +336,16 @@ body {
   color: #bada55;
   font-weight: bold;
 }
-/* line 161, ../../app/styles/main.scss */
+/* line 157, ../../app/styles/main.scss */
 .page .viewport-resizer-top {
   top: -1.85em;
 }
-/* line 165, ../../app/styles/main.scss */
+/* line 161, ../../app/styles/main.scss */
 .page .viewport-resizer-bottom {
   bottom: -1.5em;
 }
 
-/* line 173, ../../app/styles/main.scss */
+/* line 169, ../../app/styles/main.scss */
 .candidate-node-highlight {
   position: relative;
   background: rgba(127, 127, 127, 0.2);

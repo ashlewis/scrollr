@@ -2,13 +2,14 @@
   "name": "scrollr",
   "version": "0.0.0",
   "dependencies": {
-    "sass-bootstrap": "~2.3.0",
     "requirejs": "~2.1.4",
-    "modernizr": "~2.6.2",
     "jquery": "~1.9.1",
     "jquery-ui": "~1.10.2",
     "Baseline.js": "git://github.com/daneden/Baseline.js.git",
-    "waitForImages": "git://github.com/alexanderdickson/waitForImages.git#~1.4.2"
+    "waitForImages": "git://github.com/alexanderdickson/waitForImages.git#~1.4.2",
+    "requirejs-domready": "~2.0.1",
+    "meyer-reset": "git://github.com/adamstac/meyer-reset.git",
+    "modernizr": "~2.6.2"
   },
   "devDependencies": {}
 }

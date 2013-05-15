@@ -1,30 +1,13 @@
 @charset "UTF-8";
 @import url(http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css);
-/* line 4, ../../app/styles/_raw.scss */
-main {
-  float: left;
-  width: 75%;
-}
-
-/* line 8, ../../app/styles/_raw.scss */
-aside {
-  width: 25%;
-  float: left;
-}
-
-/* line 13, ../../app/styles/_raw.scss */
+/* line 5, ../../app/styles/main.scss */
 body {
   padding: 0;
   margin: 0;
 }
 
-/* line 18, ../../app/styles/main.scss */
+/* line 15, ../../app/styles/main.scss */
 .page {
-  /* http://meyerweb.com/eric/tools/css/reset/
-     v2.0 | 20110126
-     License: none (public domain)
-  */
-  /* HTML5 display-role reset for older browsers */
   font-family: Georgia,Cambria,"Times New Roman",Times,serif;
   font-weight: 400;
   font-size: 20px;
@@ -36,20 +19,8 @@ body {
   color: #444444;
   background: #fefefe;
 }
-/* line 18, ../../app/styles/_reset.scss */
-.page div, .page span, .page applet, .page object, .page iframe,
-.page h1, .page h2, .page h3, .page h4, .page h5, .page h6, .page p, .page blockquote, .page pre,
-.page a, .page abbr, .page acronym, .page address, .page big, .page cite, .page code,
-.page del, .page dfn, .page em, .page img, .page ins, .page kbd, .page q, .page s, .page samp,
-.page small, .page strike, .page strong, .page sub, .page sup, .page tt, .page var,
-.page b, .page u, .page i, .page center,
-.page dl, .page dt, .page dd, .page ol, .page ul, .page li,
-.page fieldset, .page form, .page label, .page legend,
-.page table, .page caption, .page tbody, .page tfoot, .page thead, .page tr, .page th, .page td,
-.page article, .page aside, .page canvas, .page details, .page embed,
-.page figure, .page figcaption, .page footer, .page header, .page hgroup,
-.page menu, .page nav, .page output, .page ruby, .page section, .page summary,
-.page time, .page mark, .page audio, .page video {
+/* line 6, ../../app/components/meyer-reset/stylesheets/_meyer-reset.sass */
+.page html, .page body, .page div, .page span, .page applet, .page object, .page iframe, .page h1, .page h2, .page h3, .page h4, .page h5, .page h6, .page p, .page blockquote, .page pre, .page a, .page abbr, .page acronym, .page address, .page big, .page cite, .page code, .page del, .page dfn, .page em, .page img, .page ins, .page kbd, .page q, .page s, .page samp, .page small, .page strike, .page strong, .page sub, .page sup, .page tt, .page var, .page b, .page u, .page i, .page center, .page dl, .page dt, .page dd, .page ol, .page ul, .page li, .page fieldset, .page form, .page label, .page legend, .page table, .page caption, .page tbody, .page tfoot, .page thead, .page tr, .page th, .page td, .page article, .page aside, .page canvas, .page details, .page embed, .page figure, .page figcaption, .page footer, .page header, .page hgroup, .page menu, .page nav, .page output, .page ruby, .page section, .page summary, .page time, .page mark, .page audio, .page video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -57,26 +28,33 @@ body {
   font: inherit;
   vertical-align: baseline;
 }
-/* line 28, ../../app/styles/_reset.scss */
-.page article, .page aside, .page details, .page figcaption, .page figure,
-.page footer, .page header, .page hgroup, .page menu, .page nav, .page section {
+/* line 15, ../../app/components/meyer-reset/stylesheets/_meyer-reset.sass */
+.page article, .page aside, .page details, .page figcaption, .page figure, .page footer, .page header, .page hgroup, .page menu, .page nav, .page section {
   display: block;
 }
-/* line 31, ../../app/styles/_reset.scss */
+/* line 18, ../../app/components/meyer-reset/stylesheets/_meyer-reset.sass */
+.page body {
+  line-height: 1;
+}
+/* line 21, ../../app/components/meyer-reset/stylesheets/_meyer-reset.sass */
 .page ol, .page ul {
   list-style: none;
 }
-/* line 34, ../../app/styles/_reset.scss */
+/* line 24, ../../app/components/meyer-reset/stylesheets/_meyer-reset.sass */
 .page blockquote, .page q {
   quotes: none;
 }
-/* line 38, ../../app/styles/_reset.scss */
-.page blockquote:before, .page blockquote:after,
-.page q:before, .page q:after {
-  content: '';
+/* line 28, ../../app/components/meyer-reset/stylesheets/_meyer-reset.sass */
+.page blockquote:before, .page blockquote:after {
+  content: "";
   content: none;
 }
-/* line 42, ../../app/styles/_reset.scss */
+/* line 33, ../../app/components/meyer-reset/stylesheets/_meyer-reset.sass */
+.page q:before, .page q:after {
+  content: "";
+  content: none;
+}
+/* line 37, ../../app/components/meyer-reset/stylesheets/_meyer-reset.sass */
 .page table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -237,56 +215,62 @@ body {
 .page table tbody tr:hover > th {
   background-color: #cbcbcb;
 }
-/* line 44, ../../app/styles/main.scss */
+/* line 32, ../../app/styles/main.scss */
+.page.resizing {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: row-resize !important;
+}
+/* line 47, ../../app/styles/main.scss */
 .page .button {
   pointer-events: auto;
   cursor: pointer;
   z-index: 999;
-  padding: 5px;
-  margin: 2px;
+  padding: 1em 2em;
+  margin: .5em;
   color: #bada55;
   background: #fefefe;
   font-family: FontAwesome;
   text-decoration: none;
   -webkit-user-select: none;
 }
-/* line 58, ../../app/styles/main.scss */
+/* line 61, ../../app/styles/main.scss */
 .page .button:hover {
   background: #f1f1f1;
 }
-/* line 65, ../../app/styles/main.scss */
+/* line 68, ../../app/styles/main.scss */
 .page .remove {
   position: absolute;
-  top: -2.5em;
+  top: -4.5em;
   right: 0;
 }
-/* line 73, ../../app/styles/main.scss */
+/* line 76, ../../app/styles/main.scss */
 .page .arrow-up {
   position: absolute;
-  bottom: -2.5em;
+  bottom: -4.5em;
   right: 1.5em;
 }
-/* line 79, ../../app/styles/main.scss */
+/* line 82, ../../app/styles/main.scss */
 .page .arrow-down {
   position: absolute;
-  bottom: -5em;
+  bottom: -9em;
   right: 1.5em;
 }
-/* line 85, ../../app/styles/main.scss */
+/* line 88, ../../app/styles/main.scss */
 .page .step-up {
-  bottom: -3.25em;
-  right: 4.5em;
+  bottom: -6em;
+  right: 9em;
   font-size: .75em;
   line-height: .75em;
 }
-/* line 93, ../../app/styles/main.scss */
+/* line 96, ../../app/styles/main.scss */
 .page .step-down {
-  bottom: -5em;
-  right: 4.5em;
+  bottom: -9em;
+  right: 9em;
   font-size: .75em;
   line-height: .75em;
 }
-/* line 101, ../../app/styles/main.scss */
+/* line 104, ../../app/styles/main.scss */
 .page .fast-backward {
   position: absolute;
   -webkit-transform: rotate(90deg);
@@ -295,7 +279,7 @@ body {
   font-size: .75em;
   line-height: .75em;
 }
-/* line 111, ../../app/styles/main.scss */
+/* line 114, ../../app/styles/main.scss */
 .page .fast-forward {
   position: absolute;
   -webkit-transform: rotate(90deg);
@@ -304,7 +288,7 @@ body {
   font-size: .75em;
   line-height: .75em;
 }
-/* line 121, ../../app/styles/main.scss */
+/* line 124, ../../app/styles/main.scss */
 .page .viewport {
   box-sizing: border-box;
   position: fixed;
@@ -319,12 +303,12 @@ body {
   overflow: visible;
   pointer-events: none;
 }
-/* line 138, ../../app/styles/main.scss */
+/* line 141, ../../app/styles/main.scss */
 .page .viewport.dragging {
   border: 2px dotted #191919;
   background: rgba(127, 127, 127, 0.2);
 }
-/* line 145, ../../app/styles/main.scss */
+/* line 150, ../../app/styles/main.scss */
 .page .viewport-resizer {
   position: absolute;
   width: 100%;
@@ -336,22 +320,35 @@ body {
   color: #bada55;
   font-weight: bold;
 }
-/* line 157, ../../app/styles/main.scss */
+/* line 161, ../../app/styles/main.scss */
+.page .viewport-resizer:hover {
+  color: #2a6496;
+  background: #f1f1f1;
+}
+/* line 167, ../../app/styles/main.scss */
 .page .viewport-resizer-top {
   top: -1.85em;
 }
-/* line 161, ../../app/styles/main.scss */
+/* line 171, ../../app/styles/main.scss */
 .page .viewport-resizer-bottom {
   bottom: -1.5em;
 }
 
-/* line 169, ../../app/styles/main.scss */
+/* line 179, ../../app/styles/main.scss */
 .candidate-node-highlight {
   position: relative;
   background: rgba(127, 127, 127, 0.2);
   overflow: hidden;
   cursor: crosshair;
   outline: 1px dashed #7f7f7f;
+}
+/* line 189, ../../app/styles/main.scss */
+.candidate-node-highlight div:hover, .candidate-node-highlight p:hover, .candidate-node-highlight img:hover, .candidate-node-highlight table:hover, .candidate-node-highlight blockquote:hover,
+.candidate-node-highlight ul:hover, .candidate-node-highlight ol:hover, .candidate-node-highlight dl:hover, .candidate-node-highlight h1:hover, .candidate-node-highlight h2:hover, .candidate-node-highlight h3:hover, .candidate-node-highlight h4:hover,
+.candidate-node-highlight h5:hover, .candidate-node-highlight h6:hover, .candidate-node-highlight code:hover, .candidate-node-highlight main:hover, .candidate-node-highlight header:hover, .candidate-node-highlight footer:hover,
+.candidate-node-highlight section:hover, .candidate-node-highlight article:hover, .candidate-node-highlight aside:hover, .candidate-node-highlight form:hover {
+  outline: 1px dashed #7f7f7f;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* line 8, ../../app/styles/_utilities.scss */

@@ -1,5 +1,5 @@
 /*global define */
-define(['jquery', 'jqueryui', 'baseline', 'waitForImages'], function ($) {
+define(['jquery', 'jqueryui', 'baseline', 'waitForImages', 'domReady!'], function ($) {
     'use strict';
 
 var
@@ -26,6 +26,8 @@ var
       },
 
       originalBodyHTML = '',
+
+      originalScrollTop = 0,
 
       scrollFlag = 0,
 
@@ -100,33 +102,7 @@ var
 
         return createButton('arrow-down step-down', scrollDown, /*DOM.page.lineHeight*/32);
       },
-
-
-       /**
-      *
-      */
-      getSpinUpButton = function(){
-
-        if (DOM.spinUpButton) {
-          return DOM.spinUp;
-        }
-
-        return createButton('fast-backward', scrollUp, 1000000);
-      },
-
-       /**
-      *
-      */
-      getSpinDownButton = function(){
-
-        if (DOM.spinDown) {
-          return DOM.spinDown;
-        }
-
-        return createButton('fast-forward', scrollDown,  1000000);
-      },
-
-
+  
       /**
       *
       */
@@ -148,7 +124,7 @@ var
             text = document.createTextNode('....');
 
         viewportResizer.className = 'viewport-resizer viewport-resizer-'+ position;
-        viewportResizer.draggable = 'true';
+       // viewportResizer.draggable = 'true';
         viewportResizer.appendChild(text);
 
         return viewportResizer;
@@ -212,12 +188,46 @@ var
       /**
       *
       */
+      resetViewport = function(){
+        DOM.viewport.style.height = 'auto';
+        DOM.viewport.style.top = '160px';
+        DOM.viewport.style.bottom = '160px';
+        DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
+      },
+
+
+      startDrag = function(e){
+
+          e.preventDefault();
+
+          document.onmousemove = function(e){
+            if (e.clientY > 100 && (window.innerHeight - e.clientY) > 100) {
+                resize(e);
+                addClass(DOM.page, 'resizing');
+            }           
+
+            return false;
+          };
+      },
+
+      stopDrag = function(e){
+          document.onmousemove = function(){};
+          removeClass(DOM.page, 'resizing');
+      },
+  
+      /**
+      *
+      */
       addReadingModeEventListeners = function(){
 
         DOM.page.addEventListener('mousewheel', wheelMove);
         document.body.addEventListener('keydown', keyPress);
 
-        DOM.page.addEventListener('dragover', dragOver, false);
+        DOM.viewportResizerTop.addEventListener('mousedown', startDrag);
+        DOM.viewportResizerBottom.addEventListener('mousedown', startDrag);
+        window.addEventListener('mouseup', stopDrag);
+
+        window.addEventListener('resize', resetViewport);
 
       },
 
@@ -225,6 +235,14 @@ var
       *
       */
       snap = function(yCoOrd){
+
+        if (yCoOrd <= 0) {
+            return 0;
+            
+        } else if (yCoOrd <= DOM.page.lineHeight) {
+            return DOM.page.lineHeight;
+        }
+
         return (Math.round((yCoOrd / DOM.page.lineHeight)) * DOM.page.lineHeight);
       },
 
@@ -266,12 +284,26 @@ var
       return calcLineHeight();
 
     },
+    
+    /**
+    *
+    */
+    toggleNativeStyleSheets = function(toggle){
+        for (var i = document.styleSheets.length; i--;) {
+            if (document.styleSheets[i].media.mediaText != 'screen, scrollr') {
+                document.styleSheets[i].disabled = toggle;
+            }
+        }
+    },
+
       /**
       *
       */
       readingModeOn = function(e){
 
           addClass(e.srcElement, 'target');
+          
+          toggleNativeStyleSheets(true);
 
           DOM.page = getPage();
           DOM.page.innerHTML = this.innerHTML;
@@ -295,15 +327,11 @@ var
           DOM.stepDownButton = getStepDownButton();
           DOM.viewport.appendChild(DOM.stepDownButton);
 
-         // DOM.spinUpButton = getSpinUpButton();
-         // DOM.viewport.appendChild(DOM.spinUpButton);
-
-        //  DOM.spinDownButton = getSpinDownButton();
-        // DOM.viewport.appendChild(DOM.spinDownButton);
-
           DOM.page.appendChild(DOM.viewport);
 
           originalBodyHTML = DOM.body.innerHTML;
+          originalScrollTop = DOM.body.scrollTop;
+    
           DOM.body.innerHTML = '';
 
           DOM.body.appendChild(DOM.page);          
@@ -314,14 +342,13 @@ var
                 $(this).baseline(DOM.page.lineHeight);
                 // @todo: why is this not the same as jquery version below??
                 // console.log(getOffset(document.querySelector('.target')).top);
-                DOM.body.scrollTop = snap($('.target').offset().top);
+                // @todo: fix initial scroll when user does not click on paragraph/image/heading
+                DOM.body.scrollTop = snap($('.target').offset().top - 160);
             });
 
           $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
             DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
-          });
-
-          
+          });          
 
           addReadingModeEventListeners();
 
@@ -338,8 +365,11 @@ var
 
           $('.viewport').animate({ top: '0', bottom: '0' }, 500, 'easeOutBack',  function(){
             DOM.body.innerHTML = originalBodyHTML;
+            DOM.body.scrollTop = originalScrollTop;
             init();
           });
+
+          toggleNativeStyleSheets(false);
 
           return false;
       },
@@ -376,8 +406,8 @@ var
         var distance = (typeof distance === "undefined") ? snap(DOM.body.scrollTop - DOM.viewport.clientHeight) : snap(DOM.body.scrollTop - distance);
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
-
-        if (distance < 0) {
+        
+        if (distance <= 0) {
             DOM.viewport.style.height = 'auto';
             $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
                 DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
@@ -431,18 +461,21 @@ var
       /**
       *
       */
-      keyPress = function(e){
-
-		    e.preventDefault();
+      keyPress = function(e){		
 
         if (e.keyCode === 40) {
           scrollDown();
+          e.preventDefault();
 
         } else if (e.keyCode === 38) {
           scrollUp();
+          e.preventDefault();
         }
       },
 
+      /**
+      *
+      */
       hasClass = function(elem, className){
         return elem.className.indexOf(className) !== -1;
       },
@@ -500,18 +533,6 @@ var
 
     },
 
-
-      /**
-      *
-      */
-      dragOver = function(e) {
-
-        if (e.clientY > 100 && (window.innerHeight - e.clientY) > 100) {
-           resize(e);
-        }
-
-        return false;
-      },
 
       /**
       *

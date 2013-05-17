@@ -201,9 +201,11 @@ var
           e.preventDefault();
 
           document.onmousemove = function(e){
-            if (e.clientY > 100 && (window.innerHeight - e.clientY) > 100) {
+            if (e.clientY > 160 && (window.innerHeight - e.clientY) > 160) {
                 resize(e);
                 addClass(DOM.page, 'resizing');
+                addClass(DOM.viewportResizerTop, 'resizing');
+                addClass(DOM.viewportResizerBottom, 'resizing');
             }           
 
             return false;
@@ -213,6 +215,9 @@ var
       stopDrag = function(e){
           document.onmousemove = function(){};
           removeClass(DOM.page, 'resizing');
+          removeClass(DOM.viewportResizerTop, 'resizing');
+          removeClass(DOM.viewportResizerBottom, 'resizing');
+
       },
   
       /**
@@ -390,7 +395,7 @@ var
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
 
-        if (distance + window.innerHeight > DOM.page.clientHeight) {
+        if (distance + window.innerHeight > DOM.page.clientHeight  && DOM.viewport.style.top != '160px' ) {
             DOM.viewport.style.height = 'auto';
             $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
                 DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
@@ -407,7 +412,7 @@ var
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
         
-        if (distance <= 0) {
+        if (distance <= 0 && DOM.viewport.style.top != '160px') {
             DOM.viewport.style.height = 'auto';
             $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
                 DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';

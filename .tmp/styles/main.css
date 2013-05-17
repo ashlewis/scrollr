@@ -226,7 +226,7 @@ body {
   pointer-events: auto;
   cursor: pointer;
   z-index: 999;
-  padding: 1em 2em;
+  padding: .5em 2em;
   margin: .5em;
   color: #bada55;
   background: #fefefe;
@@ -241,54 +241,36 @@ body {
 /* line 68, ../../app/styles/main.scss */
 .page .remove {
   position: absolute;
-  top: -4.5em;
+  top: -3.5em;
   right: 0;
 }
 /* line 76, ../../app/styles/main.scss */
 .page .arrow-up {
   position: absolute;
-  bottom: -4.5em;
-  right: 1.5em;
+  bottom: -3.5em;
+  right: 0em;
 }
 /* line 82, ../../app/styles/main.scss */
 .page .arrow-down {
   position: absolute;
-  bottom: -9em;
-  right: 1.5em;
+  bottom: -6.25em;
+  right: 0em;
 }
 /* line 88, ../../app/styles/main.scss */
 .page .step-up {
-  bottom: -6em;
-  right: 9em;
+  bottom: -4.25em;
+  right: 7em;
   font-size: .75em;
   line-height: .75em;
 }
 /* line 96, ../../app/styles/main.scss */
 .page .step-down {
-  bottom: -9em;
-  right: 9em;
+  bottom: -6.25em;
+  right: 7em;
   font-size: .75em;
   line-height: .75em;
 }
-/* line 104, ../../app/styles/main.scss */
-.page .fast-backward {
-  position: absolute;
-  -webkit-transform: rotate(90deg);
-  bottom: -2em;
-  right: .5em;
-  font-size: .75em;
-  line-height: .75em;
-}
-/* line 114, ../../app/styles/main.scss */
-.page .fast-forward {
-  position: absolute;
-  -webkit-transform: rotate(90deg);
-  bottom: -6.5em;
-  right: .5em;
-  font-size: .75em;
-  line-height: .75em;
-}
-/* line 124, ../../app/styles/main.scss */
+/* line 105, ../../app/styles/main.scss */
 .page .viewport {
   box-sizing: border-box;
   position: fixed;
@@ -303,16 +285,15 @@ body {
   overflow: visible;
   pointer-events: none;
 }
-/* line 141, ../../app/styles/main.scss */
+/* line 122, ../../app/styles/main.scss */
 .page .viewport.dragging {
   border: 2px dotted #191919;
   background: rgba(127, 127, 127, 0.2);
 }
-/* line 150, ../../app/styles/main.scss */
+/* line 131, ../../app/styles/main.scss */
 .page .viewport-resizer {
   position: absolute;
-  width: 100%;
-  left: 0;
+  margin: 0 .5em;
   height: 32px;
   pointer-events: auto;
   cursor: row-resize !important;
@@ -320,21 +301,23 @@ body {
   color: #bada55;
   font-weight: bold;
 }
-/* line 161, ../../app/styles/main.scss */
-.page .viewport-resizer:hover {
+/* line 142, ../../app/styles/main.scss */
+.page .viewport-resizer:hover, .page .viewport-resizer.resizing {
   color: #2a6496;
   background: #f1f1f1;
 }
-/* line 167, ../../app/styles/main.scss */
+/* line 148, ../../app/styles/main.scss */
 .page .viewport-resizer-top {
-  top: -1.85em;
+  top: -2.5em;
+  padding: .5em 2em 0 2em;
 }
-/* line 171, ../../app/styles/main.scss */
+/* line 153, ../../app/styles/main.scss */
 .page .viewport-resizer-bottom {
-  bottom: -1.5em;
+  bottom: -2.5em;
+  padding: 0 2em .5em 2em;
 }
 
-/* line 179, ../../app/styles/main.scss */
+/* line 162, ../../app/styles/main.scss */
 .candidate-node-highlight {
   position: relative;
   background: rgba(127, 127, 127, 0.2);
@@ -342,7 +325,7 @@ body {
   cursor: crosshair;
   outline: 1px dashed #7f7f7f;
 }
-/* line 189, ../../app/styles/main.scss */
+/* line 172, ../../app/styles/main.scss */
 .candidate-node-highlight div:hover, .candidate-node-highlight p:hover, .candidate-node-highlight img:hover, .candidate-node-highlight table:hover, .candidate-node-highlight blockquote:hover,
 .candidate-node-highlight ul:hover, .candidate-node-highlight ol:hover, .candidate-node-highlight dl:hover, .candidate-node-highlight h1:hover, .candidate-node-highlight h2:hover, .candidate-node-highlight h3:hover, .candidate-node-highlight h4:hover,
 .candidate-node-highlight h5:hover, .candidate-node-highlight h6:hover, .candidate-node-highlight code:hover, .candidate-node-highlight main:hover, .candidate-node-highlight header:hover, .candidate-node-highlight footer:hover,

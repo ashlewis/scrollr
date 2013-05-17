@@ -50,7 +50,7 @@ body{
         cursor:pointer;
 
         z-index:999;
-        padding:1em 2em;
+        padding:.5em 2em;
         margin:.5em;
         color:$highlight;
         background:$background;
@@ -69,57 +69,38 @@ body{
 
         position:absolute;
 
-        top:-4.5em;
+        top:-3.5em;
         right:0;
       }
 
       .arrow-up{
         position:absolute;
-        bottom:-4.5em;
-        right:1.5em;
+        bottom:-3.5em;
+        right:0em;
       }
 
       .arrow-down{
         position:absolute;
-        bottom:-9em;
-        right:1.5em;
+        bottom:-6.25em;
+        right:0em;
       }
 
       .step-up{
-        bottom:-6em;
-        right:9em;
+        bottom:-4.25em;
+        right:7em;
         font-size:.75em;
         line-height:.75em;
         
       }
 
       .step-down{
-        bottom:-9em;
-        right:9em;
+        bottom:-6.25em;
+        right:7em;
         font-size:.75em;
         line-height:.75em;
 
       }
 
-      .fast-backward{
-        position:absolute;
-        -webkit-transform:rotate(90deg);
-        bottom:-2em;
-        right:.5em;
-        font-size:.75em;
-        line-height:.75em;
-
-      }
-
-      .fast-forward{
-        position:absolute;
-        -webkit-transform:rotate(90deg);
-        bottom:-6.5em;
-        right:.5em;
-        font-size:.75em;
-        line-height:.75em;
-
-      }
 
     .viewport{
         box-sizing: border-box;
@@ -149,27 +130,29 @@ body{
 
     .viewport-resizer{
         position:absolute;
-        width:100%;
-        left:0;
+        margin:0 .5em;
         height:$defaultLineHeight;
+        
         pointer-events:auto;
         cursor:row-resize !important;
         text-align:center;
         color:$highlight;
         font-weight:bold;
 
-         &:hover{
+         &:hover, &.resizing{
           color:#2a6496;
           background:darken($background,5);
         }
     }
 
     .viewport-resizer-top{
-        top:-1.85em;
+        top:-2.5em;
+        padding:.5em 2em 0 2em;
     }
 
     .viewport-resizer-bottom{
-        bottom:-1.5em;
+        bottom:-2.5em;
+        padding:0 2em .5em 2em;
 
     }
 

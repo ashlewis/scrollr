@@ -190,8 +190,8 @@ var
       */
       resetViewport = function(){
         DOM.viewport.style.height = 'auto';
-        DOM.viewport.style.top = '160px';
-        DOM.viewport.style.bottom = '160px';
+        DOM.viewport.style.top = '96px';
+        DOM.viewport.style.bottom = '96px';
         DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
       },
 
@@ -200,9 +200,12 @@ var
 
           e.preventDefault();
 
+          //console.log(e.clientY);
+          var delta = (getOffset(this).top + this.offsetHeight) - e.clientY;
+
           document.onmousemove = function(e){
-            if (e.clientY > 160 && (window.innerHeight - e.clientY) > 160) {
-                resize(e);
+            if ((e.clientY + delta) > 96 && (window.innerHeight - (e.clientY + delta)) > 96) {
+                resize(e, delta);
                 addClass(DOM.page, 'resizing');
                 addClass(DOM.viewportResizerTop, 'resizing');
                 addClass(DOM.viewportResizerBottom, 'resizing');
@@ -225,8 +228,8 @@ var
       */
       addReadingModeEventListeners = function(){
 
-        DOM.page.addEventListener('mousewheel', wheelMove);
-        document.body.addEventListener('keydown', keyPress);
+        DOM.body.addEventListener('mousewheel', wheelMove);
+        DOM.body.addEventListener('keydown', keyPress);
 
         DOM.viewportResizerTop.addEventListener('mousedown', startDrag);
         DOM.viewportResizerBottom.addEventListener('mousedown', startDrag);
@@ -265,7 +268,7 @@ var
             el = el.offsetParent;
         }
 
-        return { top: y, left: x };
+        return { top: y, left: x};
     },
 
     /**
@@ -339,19 +342,24 @@ var
     
           DOM.body.innerHTML = '';
 
-          DOM.body.appendChild(DOM.page);          
+          DOM.body.appendChild(DOM.page);
+          addClass(DOM.body, 'reading');
 
           DOM.page.lineHeight = getLineHeight();
 
           $(document).waitForImages($.noop, function () {
+
                 $(this).baseline(DOM.page.lineHeight);
                 // @todo: why is this not the same as jquery version below??
                 // console.log(getOffset(document.querySelector('.target')).top);
                 // @todo: fix initial scroll when user does not click on paragraph/image/heading
-                DOM.body.scrollTop = snap($('.target').offset().top - 160);
+                // @todo: this will only get fired if there are images in content
+                //        need to do this if there are no images
+                DOM.body.scrollTop = snap($('.target').offset().top - 96);
+        
             });
 
-          $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
+          $('.viewport').animate({ top: '96px', bottom: '96px' }, 500, 'easeOutBack', function(){
             DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
           });          
 
@@ -374,6 +382,9 @@ var
             init();
           });
 
+          DOM.body.removeEventListener('mousewheel', wheelMove);
+        DOM.body.removeEventListener('keydown', keyPress);
+
           toggleNativeStyleSheets(false);
 
           return false;
@@ -395,11 +406,18 @@ var
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
 
-        if (distance + window.innerHeight > DOM.page.clientHeight  && DOM.viewport.style.top != '160px' ) {
+        if (distance + window.innerHeight > DOM.page.clientHeight  && DOM.viewport.style.top != '96px' ) {
             DOM.viewport.style.height = 'auto';
-            $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
+            $('.viewport').animate({ top: '96px', bottom: '96px' }, 500, 'easeOutBack', function(){
                 DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
             });
+        }
+
+        if (distance + window.innerHeight > DOM.page.clientHeight){
+            addClass(DOM.viewport, 'limit');
+            window.setTimeout(function(){
+                removeClass(DOM.viewport, 'limit');
+            }, 800);
         }
       },
 
@@ -412,9 +430,9 @@ var
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
         
-        if (distance <= 0 && DOM.viewport.style.top != '160px') {
+        if (distance <= 0 && DOM.viewport.style.top != '96px') {
             DOM.viewport.style.height = 'auto';
-            $('.viewport').animate({ top: '160px', bottom: '160px' }, 500, 'easeOutBack', function(){
+            $('.viewport').animate({ top: '96px', bottom: '96px' }, 500, 'easeOutBack', function(){
                 DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
             });
         }
@@ -518,13 +536,13 @@ var
     /**
       *
       */
-     resize = function(e){
-
+     resize = function(e, delta){      
+      
        // header drag
-       if (e.clientY < (window.innerHeight/2 - DOM.page.lineHeight/2)) {
+       if (e.clientY+delta < (window.innerHeight/2 - DOM.page.lineHeight/2)) {
         DOM.viewport.style.height = 'auto';
-        DOM.viewport.style.top = snap(e.clientY) + 'px';
-        DOM.viewport.style.bottom = snap(e.clientY) + 'px';
+        DOM.viewport.style.top = snap(e.clientY+delta) + 'px';
+        DOM.viewport.style.bottom = snap(e.clientY+delta) + 'px';
        }
 
        // footer drag

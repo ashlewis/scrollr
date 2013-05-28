@@ -6,7 +6,12 @@ body {
   margin: 0;
 }
 
-/* line 15, ../../app/styles/main.scss */
+/* line 14, ../../app/styles/main.scss */
+.reading {
+  background: #fefefe;
+}
+
+/* line 18, ../../app/styles/main.scss */
 .page {
   font-family: Georgia,Cambria,"Times New Roman",Times,serif;
   font-weight: 400;
@@ -14,7 +19,7 @@ body {
   line-height: 32px;
   min-width: 22em;
   max-width: 37em;
-  padding: 160px 32px 192px 32px;
+  padding: 96px 32px 128px 32px;
   margin: 0 auto;
   color: #444444;
   background: #fefefe;
@@ -215,62 +220,64 @@ body {
 .page table tbody tr:hover > th {
   background-color: #cbcbcb;
 }
-/* line 32, ../../app/styles/main.scss */
+/* line 35, ../../app/styles/main.scss */
 .page.resizing {
   -webkit-user-select: none;
   user-select: none;
   cursor: row-resize !important;
 }
-/* line 47, ../../app/styles/main.scss */
+/* line 52, ../../app/styles/main.scss */
 .page .button {
   pointer-events: auto;
   cursor: pointer;
   z-index: 999;
-  padding: .5em 2em;
-  margin: .5em;
+  width: 2rem;
+  height: 2rem;
+  padding: .25rem 2rem;
+  margin: .5rem;
+  text-align: center;
   color: #bada55;
-  background: #fefefe;
   font-family: FontAwesome;
   text-decoration: none;
+  background: rgba(246, 246, 246, 0.25);
   -webkit-user-select: none;
 }
-/* line 61, ../../app/styles/main.scss */
+/* line 74, ../../app/styles/main.scss */
 .page .button:hover {
+  color: #7f7f7f;
   background: #f1f1f1;
 }
-/* line 68, ../../app/styles/main.scss */
+/* line 82, ../../app/styles/main.scss */
 .page .remove {
   position: absolute;
-  top: -3.5em;
+  top: -3.5rem;
   right: 0;
 }
-/* line 76, ../../app/styles/main.scss */
+/* line 88, ../../app/styles/main.scss */
 .page .arrow-up {
   position: absolute;
-  bottom: -3.5em;
-  right: 0em;
+  bottom: -3.5rem;
+  right: 0;
 }
-/* line 82, ../../app/styles/main.scss */
+/* line 94, ../../app/styles/main.scss */
 .page .arrow-down {
   position: absolute;
-  bottom: -6.25em;
-  right: 0em;
+  bottom: -6.5rem;
+  right: 0;
 }
-/* line 88, ../../app/styles/main.scss */
+/* line 100, ../../app/styles/main.scss */
 .page .step-up {
-  bottom: -4.25em;
-  right: 7em;
-  font-size: .75em;
-  line-height: .75em;
+  font-size: .65rem;
+  bottom: -3.5rem;
+  right: 6.5rem;
 }
-/* line 96, ../../app/styles/main.scss */
+/* line 106, ../../app/styles/main.scss */
 .page .step-down {
-  bottom: -6.25em;
-  right: 7em;
-  font-size: .75em;
-  line-height: .75em;
+  font-size: .65rem;
+  bottom: -6.5rem;
+  right: 6.5rem;
 }
-/* line 105, ../../app/styles/main.scss */
+/* line 113, ../../app/styles/main.scss */
 .page .viewport {
   box-sizing: border-box;
   position: fixed;
@@ -281,43 +288,39 @@ body {
   border-top: 3px solid #e5e5e5;
   border-bottom: 3px solid #e5e5e5;
   outline: 9999px solid rgba(254, 254, 254, 0.9);
-  background: transparent;
   overflow: visible;
   pointer-events: none;
+  background: transparent;
 }
-/* line 122, ../../app/styles/main.scss */
-.page .viewport.dragging {
-  border: 2px dotted #191919;
-  background: rgba(127, 127, 127, 0.2);
-}
-/* line 131, ../../app/styles/main.scss */
+/* line 152, ../../app/styles/main.scss */
 .page .viewport-resizer {
   position: absolute;
-  margin: 0 .5em;
+  margin: 0 .5rem;
   height: 32px;
   pointer-events: auto;
   cursor: row-resize !important;
   text-align: center;
   color: #bada55;
   font-weight: bold;
+  background: rgba(241, 241, 241, 0.5);
 }
-/* line 142, ../../app/styles/main.scss */
+/* line 165, ../../app/styles/main.scss */
 .page .viewport-resizer:hover, .page .viewport-resizer.resizing {
-  color: #2a6496;
+  color: #7f7f7f;
   background: #f1f1f1;
 }
-/* line 148, ../../app/styles/main.scss */
+/* line 171, ../../app/styles/main.scss */
 .page .viewport-resizer-top {
-  top: -2.5em;
-  padding: .5em 2em 0 2em;
+  top: -3rem;
+  padding: .5rem 2rem 0 2rem;
 }
-/* line 153, ../../app/styles/main.scss */
+/* line 176, ../../app/styles/main.scss */
 .page .viewport-resizer-bottom {
-  bottom: -2.5em;
-  padding: 0 2em .5em 2em;
+  bottom: -3rem;
+  padding: 0 2rem .5rem 2rem;
 }
 
-/* line 162, ../../app/styles/main.scss */
+/* line 186, ../../app/styles/main.scss */
 .candidate-node-highlight {
   position: relative;
   background: rgba(127, 127, 127, 0.2);
@@ -325,7 +328,7 @@ body {
   cursor: crosshair;
   outline: 1px dashed #7f7f7f;
 }
-/* line 172, ../../app/styles/main.scss */
+/* line 196, ../../app/styles/main.scss */
 .candidate-node-highlight div:hover, .candidate-node-highlight p:hover, .candidate-node-highlight img:hover, .candidate-node-highlight table:hover, .candidate-node-highlight blockquote:hover,
 .candidate-node-highlight ul:hover, .candidate-node-highlight ol:hover, .candidate-node-highlight dl:hover, .candidate-node-highlight h1:hover, .candidate-node-highlight h2:hover, .candidate-node-highlight h3:hover, .candidate-node-highlight h4:hover,
 .candidate-node-highlight h5:hover, .candidate-node-highlight h6:hover, .candidate-node-highlight code:hover, .candidate-node-highlight main:hover, .candidate-node-highlight header:hover, .candidate-node-highlight footer:hover,

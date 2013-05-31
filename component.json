@@ -9,7 +9,8 @@
     "waitForImages": "git://github.com/alexanderdickson/waitForImages.git#~1.4.2",
     "requirejs-domready": "~2.0.1",
     "meyer-reset": "git://github.com/adamstac/meyer-reset.git",
-    "modernizr": "~2.6.2"
+    "modernizr": "~2.6.2",
+    "jquery-throttle-debounce": "latest"
   },
   "devDependencies": {}
 }

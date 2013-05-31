@@ -285,14 +285,28 @@ body {
   left: 0;
   bottom: 0;
   width: 100%;
+  min-width: 20rem;
   border-top: 3px solid #e5e5e5;
   border-bottom: 3px solid #e5e5e5;
   outline: 9999px solid rgba(254, 254, 254, 0.9);
   overflow: visible;
   pointer-events: none;
   background: transparent;
+  transition: top 300ms ease-in-out, bottom 300ms ease-in-out;
+       /* background:transparent bottom center no-repeat;
+        background-size:200% 0px;
+
+
+        &.limit{
+            background: -webkit-radial-gradient(50% 100%, #bada55, $background 40%) bottom center no-repeat;
+            background-size:200% 20px;
+         } */
 }
-/* line 152, ../../app/styles/main.scss */
+/* line 150, ../../app/styles/main.scss */
+.page .viewport.resizing {
+  transition: top 10ms ease-in-out, bottom 10ms ease-in-out;
+}
+/* line 158, ../../app/styles/main.scss */
 .page .viewport-resizer {
   position: absolute;
   margin: 0 .5rem;
@@ -304,23 +318,23 @@ body {
   font-weight: bold;
   background: rgba(241, 241, 241, 0.5);
 }
-/* line 165, ../../app/styles/main.scss */
+/* line 171, ../../app/styles/main.scss */
 .page .viewport-resizer:hover, .page .viewport-resizer.resizing {
   color: #7f7f7f;
   background: #f1f1f1;
 }
-/* line 171, ../../app/styles/main.scss */
+/* line 177, ../../app/styles/main.scss */
 .page .viewport-resizer-top {
   top: -3rem;
   padding: .5rem 2rem 0 2rem;
 }
-/* line 176, ../../app/styles/main.scss */
+/* line 182, ../../app/styles/main.scss */
 .page .viewport-resizer-bottom {
   bottom: -3rem;
   padding: 0 2rem .5rem 2rem;
 }
 
-/* line 186, ../../app/styles/main.scss */
+/* line 192, ../../app/styles/main.scss */
 .candidate-node-highlight {
   position: relative;
   background: rgba(127, 127, 127, 0.2);
@@ -328,7 +342,7 @@ body {
   cursor: crosshair;
   outline: 1px dashed #7f7f7f;
 }
-/* line 196, ../../app/styles/main.scss */
+/* line 202, ../../app/styles/main.scss */
 .candidate-node-highlight div:hover, .candidate-node-highlight p:hover, .candidate-node-highlight img:hover, .candidate-node-highlight table:hover, .candidate-node-highlight blockquote:hover,
 .candidate-node-highlight ul:hover, .candidate-node-highlight ol:hover, .candidate-node-highlight dl:hover, .candidate-node-highlight h1:hover, .candidate-node-highlight h2:hover, .candidate-node-highlight h3:hover, .candidate-node-highlight h4:hover,
 .candidate-node-highlight h5:hover, .candidate-node-highlight h6:hover, .candidate-node-highlight code:hover, .candidate-node-highlight main:hover, .candidate-node-highlight header:hover, .candidate-node-highlight footer:hover,

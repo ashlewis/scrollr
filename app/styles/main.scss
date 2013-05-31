@@ -29,7 +29,7 @@ body{
     padding: $offset $defaultLineHeight ($offset + $defaultLineHeight) $defaultLineHeight;
     margin:0 auto;
 
-    @import "verticalRhythm";    
+    @import "verticalRhythm";
 
 // todo: make resize specific
     &.resizing{
@@ -42,7 +42,7 @@ body{
     color: $color;
     background:$background;
 
-    
+
 
 
     // debug: uncomment for lines
@@ -50,7 +50,7 @@ body{
 //background-size: 100% $defaultLineHeight;
 
       .button{
-        
+
         pointer-events:auto;
         cursor:pointer;
 
@@ -60,9 +60,9 @@ body{
         padding:.25rem 2rem;
         margin:.5rem;
 
-        
+
         text-align:center;
-        
+
         color:$highlight;
 
 
@@ -117,12 +117,13 @@ body{
         left:0;
         bottom:0;
         width:100%;
+        min-width:20rem;
         border-top:3px solid darken($background,10);
         border-bottom:3px solid darken($background,10);
         outline: 9999px solid fade-out($background,.1);
 
-        
-         
+
+
         overflow:visible;
 
         pointer-events:none;
@@ -132,19 +133,24 @@ body{
         //   background:fade-out(darken($background,50), .8);
        //}
 
-       background:transparent
+       background:transparent;
 
-        /*-webkit-transition:all 400ms linear;
+       transition: top 300ms ease-in-out, bottom 300ms ease-in-out;
 
-        background:transparent bottom center no-repeat;
+       /* background:transparent bottom center no-repeat;
         background-size:200% 0px;
-        
+
 
         &.limit{
             background: -webkit-radial-gradient(50% 100%, #bada55, $background 40%) bottom center no-repeat;
             background-size:200% 20px;
          } */
 
+
+        &.resizing{
+
+            transition: top 10ms ease-in-out, bottom 10ms ease-in-out;
+        }
 
 
     }
@@ -153,7 +159,7 @@ body{
         position:absolute;
         margin:0 .5rem;
         height:$defaultLineHeight;
-        
+
         pointer-events:auto;
         cursor:row-resize !important;
         text-align:center;
@@ -179,7 +185,7 @@ body{
 
     }
 
-    
+
 }
 
 

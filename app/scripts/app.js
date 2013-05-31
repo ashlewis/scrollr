@@ -1,11 +1,27 @@
 /*global define */
-define(['jquery', 'jqueryui', 'baseline', 'waitForImages', 'domReady!'], function ($) {
+define(
+  [
+    'jquery',
+    'utils',
+    'candidateNodes',
+    'controls',
+    'throttleDebounce',
+    'jqueryui',
+    'baseline',
+    'waitForImages',
+    'domReady!'
+  ],
+  function (
+      $,
+      Utils,
+      CandidateNodes,
+      Controls
+  )
+
+  {
     'use strict';
 
-var
-      HIGHLIGHT_CLASS = 'candidate-node-highlight',
-      CANDIDATE_NODE_TYPES = 'div, article, main, aside',
-      CANDIDATE_NODES_LIMIT = 10,
+    var
 
       /**
       *
@@ -22,7 +38,8 @@ var
         stepUpButton:false,
         stepDownButton:false,
         spinUpButton:false,
-        spinDownButton:false
+        spinDownButton:false,
+        pageLineHeight:false
       },
 
       originalBodyHTML = '',
@@ -49,7 +66,7 @@ var
                 clickHandler(args);
             },
             false
-        );  
+        );
 
 
         return link;
@@ -88,7 +105,7 @@ var
           return DOM.stepUpButton;
         }
 
-        return createButton('arrow-up step-up', scrollUp, /*DOM.page.lineHeight*/32);
+        return createButton('arrow-up step-up', scrollUp, getLineHeight());
       },
 
        /**
@@ -100,9 +117,9 @@ var
           return DOM.stepDownButton;
         }
 
-        return createButton('arrow-down step-down', scrollDown, /*DOM.page.lineHeight*/32);
+        return createButton('arrow-down step-down', scrollDown, getLineHeight());
       },
-  
+
       /**
       *
       */
@@ -124,7 +141,7 @@ var
             text = document.createTextNode('....');
 
         viewportResizer.className = 'viewport-resizer viewport-resizer-'+ position;
-       // viewportResizer.draggable = 'true';
+
         viewportResizer.appendChild(text);
 
         return viewportResizer;
@@ -190,9 +207,8 @@ var
       */
       resetViewport = function(){
         DOM.viewport.style.height = 'auto';
-        DOM.viewport.style.top = '96px';
-        DOM.viewport.style.bottom = '96px';
-        DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
+        DOM.viewport.style.top = 3*getLineHeight() +'px';
+        DOM.viewport.style.bottom = 3*getLineHeight() +'px';
       },
 
 
@@ -200,29 +216,32 @@ var
 
           e.preventDefault();
 
-          //console.log(e.clientY);
-          var delta = (getOffset(this).top + this.offsetHeight) - e.clientY;
+          var delta = (Utils.getOffsetTop(this) + this.offsetHeight) - e.clientY;
 
           document.onmousemove = function(e){
-            if ((e.clientY + delta) > 96 && (window.innerHeight - (e.clientY + delta)) > 96) {
+            if ((e.clientY + delta) > 3*getLineHeight() && (window.innerHeight - (e.clientY + delta)) > 3*getLineHeight()) {
                 resize(e, delta);
-                addClass(DOM.page, 'resizing');
-                addClass(DOM.viewportResizerTop, 'resizing');
-                addClass(DOM.viewportResizerBottom, 'resizing');
-            }           
+                Utils.addClass(DOM.page, 'resizing');
+                Utils.addClass(DOM.viewport, 'resizing');
+                Utils.addClass(DOM.viewportResizerTop, 'resizing');
+                Utils.addClass(DOM.viewportResizerBottom, 'resizing');
+            }
 
             return false;
           };
       },
 
       stopDrag = function(e){
+
           document.onmousemove = function(){};
-          removeClass(DOM.page, 'resizing');
-          removeClass(DOM.viewportResizerTop, 'resizing');
-          removeClass(DOM.viewportResizerBottom, 'resizing');
+          Utils.removeClass(DOM.page, 'resizing');
+          Utils.removeClass(DOM.viewport, 'resizing');
+          Utils.removeClass(DOM.viewportResizerTop, 'resizing');
+          Utils.removeClass(DOM.viewportResizerBottom, 'resizing');
+          DOM.viewport.style.top = Utils.snap(Utils.getOffsetTop(DOM.viewport), getLineHeight()) + 'px';
 
       },
-  
+
       /**
       *
       */
@@ -237,62 +256,38 @@ var
 
         window.addEventListener('resize', resetViewport);
 
+        window.addEventListener('scroll', $.debounce( 250, fixScrollTop));
+
+        DOM.viewport.addEventListener('transitionend', function(){
+
+            if (DOM.viewport.style.top === '0px') {
+                reset();
+            }
+
+            DOM.viewport.style.height = Utils.snap(DOM.viewport.clientHeight, getLineHeight()) +'px';
+
+
+        });
+
       },
 
-      /**
-      *
-      */
-      snap = function(yCoOrd){
+      fixScrollTop = function (){
+        $('body').animate({ scrollTop: Utils.snap(DOM.body.scrollTop, getLineHeight()) }, 300, 'easeOutCirc');
 
-        if (yCoOrd <= 0) {
-            return 0;
-            
-        } else if (yCoOrd <= DOM.page.lineHeight) {
-            return DOM.page.lineHeight;
-        }
-
-        return (Math.round((yCoOrd / DOM.page.lineHeight)) * DOM.page.lineHeight);
       },
-
-      /**
-      *
-      */
-      getOffset = function (el) {
-
-        var x = 0,
-            y = 0;
-
-        while (el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop )) {
-            x += el.offsetLeft - el.scrollLeft;
-            y += el.offsetTop - el.scrollTop;
-            el = el.offsetParent;
-        }
-
-        return { top: y, left: x};
-    },
-
-    /**
-    *
-    */
-    calcLineHeight = function(){
-      var style = window.getComputedStyle(DOM.page);
-
-      return parseInt(style.getPropertyValue("line-height"), 10);
-
-    },
 
     /**
     *
     */
     getLineHeight = function(){
-      if (DOM.page.lineHeight){
-        return DOM.page.lineHeight;
+      if (DOM.pageLineHeight){
+        return DOM.pageLineHeight;
       }
 
-      return calcLineHeight();
+      return DOM.pageLineHeight = Utils.calcLineHeight(DOM.page);
 
     },
-    
+
     /**
     *
     */
@@ -309,19 +304,28 @@ var
       */
       readingModeOn = function(e){
 
-          addClass(e.srcElement, 'target');
-          
+          Utils.addClass(e.srcElement, 'target');
+
           toggleNativeStyleSheets(true);
 
           DOM.page = getPage();
           DOM.page.innerHTML = this.innerHTML;
 
-          removeClass(e.srcElement, 'target');
+          Utils.removeClass(e.srcElement, 'target');
 
           DOM.viewport = getViewport();
 
+          DOM.page.appendChild(DOM.viewport);
+
+          originalBodyHTML = DOM.body.innerHTML;
+          originalScrollTop = DOM.body.scrollTop;
+
+          DOM.body.innerHTML = '';
+
+          DOM.body.appendChild(DOM.page);
+
           DOM.closeButton = getCloseButton();
-          DOM.viewport.appendChild(DOM.closeButton);
+          DOM.viewport.appendChild(DOM.closeButton/*Controls.getCloseButton()*/);
 
           DOM.upButton = getUpButton();
           DOM.viewport.appendChild(DOM.upButton);
@@ -335,33 +339,22 @@ var
           DOM.stepDownButton = getStepDownButton();
           DOM.viewport.appendChild(DOM.stepDownButton);
 
-          DOM.page.appendChild(DOM.viewport);
+          Utils.addClass(DOM.body, 'reading');
 
-          originalBodyHTML = DOM.body.innerHTML;
-          originalScrollTop = DOM.body.scrollTop;
-    
-          DOM.body.innerHTML = '';
+          $(document).waitForImages(
+              // all loaded
+              function(){
+                DOM.body.scrollTop = Utils.snap(document.querySelector('.target').offsetTop - 3*getLineHeight(), getLineHeight());
 
-          DOM.body.appendChild(DOM.page);
-          addClass(DOM.body, 'reading');
+                resetViewport();
+              },
+              // each image
+              function () {
 
-          DOM.page.lineHeight = getLineHeight();
+                $(this).baseline(getLineHeight());
 
-          $(document).waitForImages($.noop, function () {
-
-                $(this).baseline(DOM.page.lineHeight);
-                // @todo: why is this not the same as jquery version below??
-                // console.log(getOffset(document.querySelector('.target')).top);
-                // @todo: fix initial scroll when user does not click on paragraph/image/heading
-                // @todo: this will only get fired if there are images in content
-                //        need to do this if there are no images
-                DOM.body.scrollTop = snap($('.target').offset().top - 96);
-        
             });
 
-          $('.viewport').animate({ top: '96px', bottom: '96px' }, 500, 'easeOutBack', function(){
-            DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
-          });          
 
           addReadingModeEventListeners();
 
@@ -375,19 +368,21 @@ var
       readingModeOff = function(e){
 
           DOM.viewport.style.height = 'auto';
-
-          $('.viewport').animate({ top: '0', bottom: '0' }, 500, 'easeOutBack',  function(){
-            DOM.body.innerHTML = originalBodyHTML;
-            DOM.body.scrollTop = originalScrollTop;
-            init();
-          });
+          DOM.viewport.style.top = '0px';
+          DOM.viewport.style.bottom = '0px';
 
           DOM.body.removeEventListener('mousewheel', wheelMove);
-        DOM.body.removeEventListener('keydown', keyPress);
+          DOM.body.removeEventListener('keydown', keyPress);
 
           toggleNativeStyleSheets(false);
 
           return false;
+      },
+
+      reset = function(){
+          DOM.body.innerHTML = originalBodyHTML;
+          DOM.body.scrollTop = originalScrollTop;
+          init();
       },
 
       /**
@@ -402,22 +397,12 @@ var
       */
       scrollDown = function(distance){
 
-        var distance = (typeof distance === "undefined") ? snap(DOM.body.scrollTop + DOM.viewport.clientHeight) : snap(DOM.body.scrollTop + distance);
+        var distance = (typeof distance === "undefined") ? Utils.snap((DOM.body.scrollTop + DOM.viewport.clientHeight), getLineHeight()) : Utils.snap((DOM.body.scrollTop + distance), getLineHeight());
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
 
         if (distance + window.innerHeight > DOM.page.clientHeight  && DOM.viewport.style.top != '96px' ) {
-            DOM.viewport.style.height = 'auto';
-            $('.viewport').animate({ top: '96px', bottom: '96px' }, 500, 'easeOutBack', function(){
-                DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
-            });
-        }
-
-        if (distance + window.innerHeight > DOM.page.clientHeight){
-            addClass(DOM.viewport, 'limit');
-            window.setTimeout(function(){
-                removeClass(DOM.viewport, 'limit');
-            }, 800);
+           resetViewport();
         }
       },
 
@@ -426,15 +411,14 @@ var
       */
       scrollUp = function(distance){
 
-        var distance = (typeof distance === "undefined") ? snap(DOM.body.scrollTop - DOM.viewport.clientHeight) : snap(DOM.body.scrollTop - distance);
+        var distance = (typeof distance === "undefined") ? Utils.snap((DOM.body.scrollTop - DOM.viewport.clientHeight), getLineHeight()) : Utils.snap((DOM.body.scrollTop - distance), getLineHeight());
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
-        
-        if (distance <= 0 && DOM.viewport.style.top != '96px') {
-            DOM.viewport.style.height = 'auto';
-            $('.viewport').animate({ top: '96px', bottom: '96px' }, 500, 'easeOutBack', function(){
-                DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
-            });
+
+
+
+        if (distance <= 0 && DOM.viewport.style.top != 3*getLineHeight() +'px') {
+            resetViewport();
         }
 
       },
@@ -484,7 +468,7 @@ var
       /**
       *
       */
-      keyPress = function(e){		
+      keyPress = function(e){
 
         if (e.keyCode === 40) {
           scrollDown();
@@ -496,135 +480,36 @@ var
         }
       },
 
-      /**
-      *
-      */
-      hasClass = function(elem, className){
-        return elem.className.indexOf(className) !== -1;
-      },
-
-      /**
-      *
-      */
-      addClass = function(elem, className){
-
-        if (!hasClass(elem, className)) {
-
-          if (!elem.className){
-            elem.className = className;
-
-          } else {
-            elem.className += ' '+ className;
-          }
-        }
-      },
-
-      /**
-      *
-      */
-      removeClass = function(elem, className) {
-        var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ') + ' ';
-        if (hasClass(elem, className)) {
-            while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
-                newClass = newClass.replace(' ' + className + ' ', ' ');
-            }
-            elem.className = newClass.replace(/^\s+|\s+$/g, '');
-        }
-      },
-
-
     /**
       *
       */
-     resize = function(e, delta){      
-      
+     resize = function(e, delta){
+
        // header drag
-       if (e.clientY+delta < (window.innerHeight/2 - DOM.page.lineHeight/2)) {
+       if (e.clientY+delta < (window.innerHeight/2 - getLineHeight()/2)) {
         DOM.viewport.style.height = 'auto';
-        DOM.viewport.style.top = snap(e.clientY+delta) + 'px';
-        DOM.viewport.style.bottom = snap(e.clientY+delta) + 'px';
+        DOM.viewport.style.top = e.clientY+delta + 'px';
+        DOM.viewport.style.bottom = e.clientY+delta + 'px';
        }
 
        // footer drag
-       if (e.clientY > (window.innerHeight/2 + DOM.page.lineHeight/2)) {
-        DOM.viewport.style.height = 'auto';
-        DOM.viewport.style.top = snap(window.innerHeight - e.clientY) + 'px';
-        DOM.viewport.style.bottom = snap(window.innerHeight - e.clientY) + 'px';
+       if (e.clientY > (window.innerHeight/2 + getLineHeight()/2)) {
+         DOM.viewport.style.height = 'auto';
+         DOM.viewport.style.top = window.innerHeight - e.clientY + 'px';
+         DOM.viewport.style.bottom = window.innerHeight - e.clientY + 'px';
        }
-       DOM.viewport.style.height = snap(DOM.viewport.clientHeight) +'px';
-
 
     },
-
-
-      /**
-      *
-      */
-      highlight = function(e){
-
-        addClass(this, HIGHLIGHT_CLASS);
-
-        e.stopPropagation();
-
-      },
-
-      /**
-      *
-      */
-      unHighlight = function(e){
-        removeClass(this, HIGHLIGHT_CLASS);
-
-        e.stopPropagation();
-      },
-
-      /**
-      *
-      */
-      sortElementsByArea = function(a, b) {
-          var aArea = a.clientHeight * a.clientWidth,
-              bArea = b.clientHeight * b.clientWidth;
-
-          if (aArea  < bArea ) {
-            return 1;
-
-          } else if (aArea === bArea ) {
-            return 0;
-
-          } else {
-            return -1;
-          }
-      },
-
-      /**
-      *
-      */
-      getCandidateNodes = function(){
-
-        var nodeList = document.body.querySelectorAll(CANDIDATE_NODE_TYPES),
-            nodeArray = Array.prototype.slice.call(nodeList);
-
-        nodeList = document.body.querySelectorAll(CANDIDATE_NODE_TYPES);
-        nodeArray = Array.prototype.slice.call(nodeList);
-
-        nodeArray.sort(sortElementsByArea);
-
-        return nodeArray.slice(0, CANDIDATE_NODES_LIMIT);
-      },
 
       /**
       *
       */
       bindEventHandlers = function(){
+        var candidateNodes = document.querySelectorAll('.candidate-node');
 
-        var nodes = getCandidateNodes();
-
-        for (var i=nodes.length; i--;) {
-            nodes[i].className = 'candidate-node';
-            nodes[i].addEventListener('mouseover', highlight, false);
-            nodes[i].addEventListener('mouseout', unHighlight, false);
-            nodes[i].addEventListener('click', unHighlight, false);
-            nodes[i].addEventListener('click', readingModeOn, false);
-        }
+        [].forEach.call(candidateNodes, function(candidateNode) {
+            candidateNode.addEventListener('click', readingModeOn, false);
+        });
 
       },
 
@@ -632,7 +517,8 @@ var
       *
       */
       init = function(){
-        bindEventHandlers();
+          CandidateNodes.init();
+          bindEventHandlers();
       };
 
     return {

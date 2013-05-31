@@ -206,6 +206,7 @@ define(
       *
       */
       resetViewport = function(){
+        console.log('resetViewport');
         DOM.viewport.style.height = 'auto';
         DOM.viewport.style.top = 3*getLineHeight() +'px';
         DOM.viewport.style.bottom = 3*getLineHeight() +'px';
@@ -218,7 +219,7 @@ define(
 
           var delta = (Utils.getOffsetTop(this) + this.offsetHeight) - e.clientY;
 
-          document.onmousemove = function(e){
+          document.onmousemove = $.throttle(50, function(e){
             if ((e.clientY + delta) > 3*getLineHeight() && (window.innerHeight - (e.clientY + delta)) > 3*getLineHeight()) {
                 resize(e, delta);
                 Utils.addClass(DOM.page, 'resizing');
@@ -228,7 +229,8 @@ define(
             }
 
             return false;
-          };
+          });
+
       },
 
       stopDrag = function(e){
@@ -254,9 +256,11 @@ define(
         DOM.viewportResizerBottom.addEventListener('mousedown', startDrag);
         window.addEventListener('mouseup', stopDrag);
 
-        window.addEventListener('resize', resetViewport);
+        //window.addEventListener('resize', $.debounce( 250, resetViewport));
+        $(window).on('resize', $.debounce( 250, resetViewport));
 
-        window.addEventListener('scroll', $.debounce( 250, fixScrollTop));
+        //window.addEventListener('scroll', $.debounce( 250, fixScrollTop));
+        $(window).on('scroll', $.debounce( 250, fixScrollTop));
 
         DOM.viewport.addEventListener('transitionend', function(){
 
@@ -272,6 +276,7 @@ define(
       },
 
       fixScrollTop = function (){
+        console.log('fixScrollTop');
         $('body').animate({ scrollTop: Utils.snap(DOM.body.scrollTop, getLineHeight()) }, 300, 'easeOutCirc');
 
       },
@@ -313,16 +318,15 @@ define(
 
           Utils.removeClass(e.srcElement, 'target');
 
-          DOM.viewport = getViewport();
-
-          DOM.page.appendChild(DOM.viewport);
-
           originalBodyHTML = DOM.body.innerHTML;
           originalScrollTop = DOM.body.scrollTop;
 
           DOM.body.innerHTML = '';
 
           DOM.body.appendChild(DOM.page);
+
+          DOM.viewport = getViewport();
+          DOM.page.appendChild(DOM.viewport);
 
           DOM.closeButton = getCloseButton();
           DOM.viewport.appendChild(DOM.closeButton/*Controls.getCloseButton()*/);
@@ -373,6 +377,16 @@ define(
 
           DOM.body.removeEventListener('mousewheel', wheelMove);
           DOM.body.removeEventListener('keydown', keyPress);
+
+          window.removeEventListener('mouseup', stopDrag);
+
+          //non-jquery version does not remove eventListener
+          //window.removeEventListener('resize', resetViewport, true);
+          $(window).off('resize', resetViewport);
+
+          //non-jquery version does not remove eventListener
+          //window.removeEventListener('scroll', fixScrollTop);
+          $(window).off('scroll', fixScrollTop);
 
           toggleNativeStyleSheets(false);
 
@@ -440,10 +454,11 @@ define(
       /**
       *
       */
-      wheelMoveProcess = function(){
+      wheelMoveProcess = function(e){
          var e = window.event || e,
             delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 
+            console.log(e);
         scrollFlag = 1;
 
         scroll(delta);

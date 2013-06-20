@@ -29,10 +29,14 @@ require.config({
     }
 });
 
-require(['app'], function (app) {
+require(['candidateNodes','eventHandlers'],
+function (CandidateNodes, EventHandlers) {
     'use strict';
     // use app here
-     app.init();
+
+    CandidateNodes.init();
+    EventHandlers.init();
+
     //console.log(app);
 
 });

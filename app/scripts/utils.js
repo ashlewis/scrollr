@@ -30,14 +30,12 @@ define([], function () {
     */
     removeClass = function(elem, className) {
 
-        var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ') + ' ';
+        var classes = elem.classList;
 
-        if (hasClass(elem, className)) {
-            while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
-                newClass = newClass.replace(' ' + className + ' ', ' ');
-            }
-            elem.className = newClass.replace(/^\s+|\s+$/g, '');
+        if (classes) {
+            classes.remove(className);
         }
+
     },
 
     /**

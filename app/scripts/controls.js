@@ -6,17 +6,17 @@ define([], function () {
     var
 
       CONTROLS = {
-        getUpButton : false,
-        getDownButton : false,
-        getStepUpButton : false,
-        getStepDownButton : false,
-        getCloseButton : false
+        upButton : false,
+        downButton : false,
+        stepUpButton : false,
+        stepDownButton : false,
+        closeButton : false
       },
 
      /**
       *
       */
-      createButton = function(type, clickHandler, args){
+      createButton = function(type){
         var link = document.createElement('a'),
             icon = document.createElement('i');
 
@@ -25,31 +25,8 @@ define([], function () {
         icon.unselectable = "on";
 
         link.appendChild(icon);
-        link.addEventListener(
-            'click',
-            function(){
-                clickHandler(args);
-            },
-            false
-        );
-
-
+       
         return link;
-      },
-
-      /**
-      *
-      */
-      createViewportResizer = function(position){
-
-        var viewportResizer = document.createElement('div'),
-            text = document.createTextNode('....');
-
-        viewportResizer.className = 'viewport-resizer viewport-resizer-'+ position;
-
-        viewportResizer.appendChild(text);
-
-        return viewportResizer;
       },
 
       /**
@@ -57,11 +34,11 @@ define([], function () {
       */
       getUpButton = function(){
 
-        if (CONTROLS.upButton) {
-          return CONTROLS.upButton;
+        if (!CONTROLS.upButton) {
+          CONTROLS.upButton = createButton('arrow-up');
         }
 
-        return createButton('arrow-up', scrollUp);
+        return CONTROLS.upButton;
       },
 
        /**
@@ -69,11 +46,11 @@ define([], function () {
       */
       getDownButton = function(){
 
-        if (CONTROLS.downButton) {
-          return CONTROLS.downButton;
+        if (!CONTROLS.downButton) {
+          CONTROLS.downButton = createButton('arrow-down');
         }
 
-        return createButton('arrow-down', scrollDown);
+        return CONTROLS.downButton;
       },
 
        /**
@@ -81,11 +58,11 @@ define([], function () {
       */
       getStepUpButton = function(){
 
-        if (CONTROLS.stepUpButton) {
-          return CONTROLS.stepUpButton;
+        if (!CONTROLS.stepUpButton) {
+          CONTROLS.stepUpButton = createButton('arrow-up step-up');
         }
 
-        return createButton('arrow-up step-up', scrollUp, getLineHeight());
+        return CONTROLS.stepUpButton;
       },
 
        /**
@@ -93,11 +70,11 @@ define([], function () {
       */
       getStepDownButton = function(){
 
-        if (CONTROLS.stepDownButton) {
-          return CONTROLS.stepDownButton;
+        if (!CONTROLS.stepDownButton) {
+          CONTROLS.stepDownButton = createButton('arrow-down step-down');
         }
 
-        return createButton('arrow-down step-down', scrollDown, getLineHeight());
+        return CONTROLS.stepDownButton;
       },
 
       /**
@@ -105,11 +82,11 @@ define([], function () {
       */
       getCloseButton = function(){
 
-        if (CONTROLS.closeButton) {
-          return CONTROLS.closeButton;
+        if (!CONTROLS.closeButton) {
+          CONTROLS.closeButton =  createButton('remove');
         }
 
-        return createButton('remove', readingModeOff);
+        return CONTROLS.closeButton;
       };
 
 

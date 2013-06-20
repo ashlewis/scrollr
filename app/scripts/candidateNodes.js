@@ -1,9 +1,11 @@
 /*global define */
 define(['utils'], function (Utils) {
+    
     'use strict';
 
     var
 
+    NODE_CLASS = 'candidate_node',
     HIGHLIGHT_CLASS = 'candidate-node-highlight',
     CANDIDATE_NODE_TYPES = 'div, article, main, aside',
     CANDIDATE_NODES_LIMIT = 10,
@@ -11,21 +13,70 @@ define(['utils'], function (Utils) {
     /**
     *
     */
-    highlight = function(e){
-
-        Utils.addClass(this, HIGHLIGHT_CLASS);
-
-        e.stopPropagation();
+    highlight = function(elem){
+        Utils.addClass(elem, HIGHLIGHT_CLASS);
 
     },
 
     /**
     *
     */
-    unHighlight = function(e){
-        Utils.removeClass(this, HIGHLIGHT_CLASS);
-
+    unHighlight = function(elem){
+        Utils.removeClass(elem, HIGHLIGHT_CLASS);
+    },
+    
+    /**
+    *
+    */
+    handleCandidateNodeMouseOver = function(e){
         e.stopPropagation();
+        highlight(this);
+        
+    },
+    
+    /**
+    *
+    */
+    handleCandidateNodeMouseOut = function(e){
+       e.stopPropagation();
+       unHighlight(this);
+    },
+    
+    /**
+    *
+    */
+    handleCandidateNodeClick = function(e){
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        unHighlight(this);
+
+        var candidateNodeClickEvent = new CustomEvent('candidateNodeClick', {
+            detail: {
+                target : e.srcElement,
+                node: this                
+            },
+            bubbles: true,
+            cancelable: false
+        });
+
+        document.body.dispatchEvent(candidateNodeClickEvent);
+  
+    },
+
+    /**
+    *
+    */
+    bindEventsHandlers = function(){
+        var candidateNodes = document.querySelectorAll('.'+ NODE_CLASS);
+
+        [].forEach.call(candidateNodes, function(candidateNode) {
+            candidateNode.addEventListener('mouseover', handleCandidateNodeMouseOver, false);
+            candidateNode.addEventListener('mouseout', handleCandidateNodeMouseOut, false);
+            candidateNode.addEventListener('click', handleCandidateNodeClick, false);
+        });
+
     },
 
     /**
@@ -65,23 +116,19 @@ define(['utils'], function (Utils) {
     /**
     *
     */
-    bindEventHandlers = function(){
-
-        var nodes = getCandidateNodes();
-
-        for (var i=nodes.length; i--;) {
-            nodes[i].className = 'candidate-node';
-            nodes[i].addEventListener('mouseover', highlight, false);
-            nodes[i].addEventListener('mouseout', unHighlight, false);
-            nodes[i].addEventListener('click', unHighlight, false);
-        }
-
+    identifyCandidateNodes = function(){
+        [].forEach.call(getCandidateNodes(), function(node){
+            node.className = NODE_CLASS;
+        });
     },
 
+    /**
+    *
+    */
     init = function(){
-        bindEventHandlers();
+        identifyCandidateNodes();
+        bindEventsHandlers();
     };
-
 
     return {
         'init' : init

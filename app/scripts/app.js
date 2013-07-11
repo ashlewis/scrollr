@@ -27,32 +27,48 @@ define(
       KEY_DOWN_ARROW = 40,
       KEY_ESCAPE =  27,
 
-      isScrolling = 0,     
+      isScrolling = 0,
 
-      doDrag = function(clientY, delta){
+      initDrag = function(clientY, resizer){
+            var mouseOrigin = clientY,
+                viewportTopOrigin = Dom.getViewport().offsetTop,
+                viewportBottomOrigin = Utils.getOffsetBottom(Dom.getViewport());
 
-        if ((clientY + delta) > 3*Dom.getLineHeight() && (window.innerHeight - (clientY + delta)) > 3*Dom.getLineHeight()) {
-            resize(clientY, delta);
             Utils.addClass(Dom.getPage(), 'resizing');
             Utils.addClass(Dom.getViewport(), 'resizing');
             Utils.addClass(Dom.getViewportResizerTop(), 'resizing');
             Utils.addClass(Dom.getViewportResizerBottom(), 'resizing');
+
+           // document.onmousemove = $.throttle(100, function(e){
+           //     e.preventDefault();
+           //     var delta = e.clientY - mouseOrigin;
+           //     doDrag(resizer, delta, viewportTopOrigin, viewportBottomOrigin);
+           // });
+
+            document.onmousemove = function(e){
+                e.preventDefault();
+                var delta = e.clientY - mouseOrigin;
+                doDrag(resizer, delta, viewportTopOrigin, viewportBottomOrigin);
+            };
+
+
+        },
+
+      doDrag = function(resizer, delta, viewportTopOrigin, viewportBottomOrigin){
+
+        if (resizer === Dom.getViewportResizerBottom()) {
+            delta = -delta;
         }
 
-        return false;
-      },
+        if (Dom.getViewport().offsetTop >= 3*Dom.getLineHeight()) {
+            Dom.getViewport().style.height = 'auto';
+            Dom.getViewport().style.top = (viewportTopOrigin + delta) + 'px';
+            Dom.getViewport().style.bottom = (viewportBottomOrigin + delta) + 'px';
 
-      initDrag = function(clientY, resizer){
-          //var delta = (Utils.getOffsetTop(resizer) + resizer.offsetHeight) - clientY;
-           var delta = Dom.getViewport().offsetTop - clientY;
-
-           console.log(delta);
-
-          document.onmousemove = $.throttle(50, function(e){
-              doDrag(e.clientY, delta);
-          });
+        }
 
       },
+
 
       stopDrag = function(e){
 
@@ -61,9 +77,21 @@ define(
           Utils.removeClass(Dom.getViewport(), 'resizing');
           Utils.removeClass(Dom.getViewportResizerTop(), 'resizing');
           Utils.removeClass(Dom.getViewportResizerBottom(), 'resizing');
-          Dom.getViewport().style.top = Utils.snap(Utils.getOffsetTop(Dom.getViewport()), Dom.getLineHeight()) + 'px';
+
+          Dom.getViewport().style.top = Utils.snap(Dom.getViewport().offsetTop, Dom.getLineHeight()) + 'px';
+          Dom.getViewport().style.bottom = window.innerHeight - (Utils.snap(Dom.getViewport().offsetTop, Dom.getLineHeight()) + Utils.snap(Dom.getViewport().offsetHeight, Dom.getLineHeight())) +'px';
+
+          if (Dom.getViewport().offsetTop < 3*Dom.getLineHeight()) {
+            Dom.getViewport().style.top = 3*Dom.getLineHeight() + 'px';
+          }
+
+          if (Utils.getOffsetBottom(Dom.getViewport()) < 3*Dom.getLineHeight()) {
+            Dom.getViewport().style.bottom = 3*Dom.getLineHeight() + 'px';
+          }
 
       },
+
+
 
       /**
       *
@@ -71,7 +99,7 @@ define(
       fixScrollTop = function (){
 
         $('body').animate({ scrollTop: Utils.snap(document.body.scrollTop, Dom.getLineHeight()) }, 300, 'easeOutCirc');
-        
+
       },
 
     /**
@@ -154,12 +182,12 @@ define(
 
       },
 
-     
+
       /**
       *
       */
       wheelMove = function(wheelDelta){
-        
+
         var delta = Math.max(-1, Math.min(1, wheelDelta));
 
         if (isScrolling) {
@@ -187,14 +215,20 @@ define(
             switch (e.keyCode) {
 
                 case KEY_UP_ARROW:
-                    e.preventDefault(); 
-                    doDrag(Dom.getViewport().offsetTop, -6);
-  
+                    e.preventDefault();
+                    var viewportTopOrigin = Dom.getViewport().offsetTop,
+                        viewportBottomOrigin = Utils.snap(Utils.getOffsetBottom(Dom.getViewport()), Dom.getLineHeight());
+
+                    doDrag(Dom.getViewportResizerTop(), -Dom.getLineHeight(), viewportTopOrigin, viewportBottomOrigin);
+
                     break;
 
                 case KEY_DOWN_ARROW:
                     e.preventDefault();
-                    doDrag(Dom.getViewport().offsetTop, 6);
+                    var viewportTopOrigin = Dom.getViewport().offsetTop,
+                        viewportBottomOrigin = Utils.snap(Utils.getOffsetBottom(Dom.getViewport()), Dom.getLineHeight());
+
+                    doDrag(Dom.getViewportResizerTop(), Dom.getLineHeight(), viewportTopOrigin, viewportBottomOrigin);
                     break;
             }
 
@@ -219,28 +253,9 @@ define(
             }
         }
 
-      },
+      };
 
-    /**
-      *
-      */
-     resize = function(clientY, delta){
 
-       // header drag
-       if (clientY+delta < (window.innerHeight/2 - Dom.getLineHeight()/2)) {
-        Dom.getViewport().style.height = 'auto';
-        Dom.getViewport().style.top = clientY+delta + 'px';
-        Dom.getViewport().style.bottom = clientY+delta + 'px';
-       }
-
-       // footer drag
-       if (clientY > (window.innerHeight/2 + Dom.getLineHeight()/2)) {
-         Dom.getViewport().style.height = 'auto';
-         Dom.getViewport().style.top = window.innerHeight - clientY + 'px';
-         Dom.getViewport().style.bottom = window.innerHeight - clientY + 'px';
-       }
-
-    };
 
 
     return {

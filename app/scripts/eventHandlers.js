@@ -40,10 +40,15 @@ function ($, Utils, App, Dom, Swap) {
         if (isCloseTransition(e.propertyName)) {
             Swap.reset();
 
-        } else {
-            Dom.getViewport().style.height = Utils.snap(Dom.getViewport().clientHeight, Dom.getLineHeight()) +'px';
         }
-        
+
+        //if (Dom.getViewport().offsetTop >= 3*Dom.getLineHeight()) {
+            //if (e.propertyName === 'top' && !Utils.hasClass(e.srcElement, 'resizing')) {
+               // Dom.getViewport().style.bottom = window.innerHeight - (Utils.snap(Dom.getViewport().offsetTop, Dom.getLineHeight()) + Utils.snap(Dom.getViewport().offsetHeight, Dom.getLineHeight())) +'px';
+
+            }
+        //}
+
     },
 
     handleUpClick = function(){
@@ -115,7 +120,7 @@ function ($, Utils, App, Dom, Swap) {
         bindReadingModeEvents();
     },
 
-    
+
     bindNonReadingModeEvents = function(){
         document.body.addEventListener('candidateNodeClick', candidateNodeClickHandler);
     },

@@ -1,6 +1,7 @@
  /*global define */
 define([], function () {
 
+
     var
     /**
     *
@@ -38,21 +39,16 @@ define([], function () {
 
     },
 
+
     /**
-    *
-    */
-    getOffsetTop = function (el) {
-
-        var y = 0;
-
-        while (el && !isNaN(el.offsetTop)) {
-            y += el.offsetTop - el.scrollTop;
-            el = el.offsetParent;
-        }
-
-        return y;
+     * [ description]
+     * @param  {DOM element} el [description]
+     * @return {int}    [description]
+     */
+    getOffsetBottom = function(el) {
+        return window.innerHeight - (el.offsetTop + el.offsetHeight)
     },
-    
+
     /**
     *
     */
@@ -80,9 +76,10 @@ define([], function () {
 
 
     return {
+        'hasClass': hasClass,
         'addClass' : addClass,
         'removeClass' : removeClass,
-        'getOffsetTop' : getOffsetTop,
+        'getOffsetBottom' : getOffsetBottom,
         'calcLineHeight' : calcLineHeight,
         'snap' : snap
     };

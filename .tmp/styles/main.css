@@ -11,12 +11,32 @@ body {
   background: #fefefe;
 }
 
-/* line 18, ../../app/styles/main.scss */
+/* line 17, ../../app/styles/main.scss */
+.hidden {
+  display: none;
+}
+
+/* line 21, ../../app/styles/main.scss */
 .page {
   font-family: Georgia,Cambria,"Times New Roman",Times,serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 32px;
+  text-align: justify;
+    /* todo: hyphenation (check webkit support)
+    word-break: break-all;
+
+    // Non standard for webkit
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+
+    hyphens: auto;
+
+    -webkit-hyphenate-before: 2;
+    -webkit-hyphenate-after: 3;
+    hyphenate-lines: 3;
+    */
   min-width: 22em;
   max-width: 37em;
   padding: 96px 32px 128px 32px;
@@ -220,13 +240,13 @@ body {
 .page table tbody tr:hover > th {
   background-color: #cbcbcb;
 }
-/* line 35, ../../app/styles/main.scss */
+/* line 55, ../../app/styles/main.scss */
 .page.resizing {
   -webkit-user-select: none;
   user-select: none;
   cursor: row-resize !important;
 }
-/* line 52, ../../app/styles/main.scss */
+/* line 72, ../../app/styles/main.scss */
 .page .button {
   pointer-events: auto;
   cursor: pointer;
@@ -242,42 +262,42 @@ body {
   background: rgba(246, 246, 246, 0.25);
   -webkit-user-select: none;
 }
-/* line 74, ../../app/styles/main.scss */
+/* line 94, ../../app/styles/main.scss */
 .page .button:hover {
   color: #7f7f7f;
   background: #f1f1f1;
 }
-/* line 82, ../../app/styles/main.scss */
+/* line 102, ../../app/styles/main.scss */
 .page .remove {
   position: absolute;
   top: -3.5rem;
   right: 0;
 }
-/* line 88, ../../app/styles/main.scss */
+/* line 108, ../../app/styles/main.scss */
 .page .arrow-up {
   position: absolute;
   bottom: -3.5rem;
   right: 0;
 }
-/* line 94, ../../app/styles/main.scss */
+/* line 114, ../../app/styles/main.scss */
 .page .arrow-down {
   position: absolute;
   bottom: -6.5rem;
   right: 0;
 }
-/* line 100, ../../app/styles/main.scss */
+/* line 120, ../../app/styles/main.scss */
 .page .step-up {
   font-size: .65rem;
   bottom: -3.5rem;
   right: 6.5rem;
 }
-/* line 106, ../../app/styles/main.scss */
+/* line 126, ../../app/styles/main.scss */
 .page .step-down {
   font-size: .65rem;
   bottom: -6.5rem;
   right: 6.5rem;
 }
-/* line 113, ../../app/styles/main.scss */
+/* line 133, ../../app/styles/main.scss */
 .page .viewport {
   box-sizing: border-box;
   position: fixed;
@@ -293,20 +313,12 @@ body {
   pointer-events: none;
   background: transparent;
   transition: top 300ms ease-in-out, bottom 300ms ease-in-out;
-       /* background:transparent bottom center no-repeat;
-        background-size:200% 0px;
-
-
-        &.limit{
-            background: -webkit-radial-gradient(50% 100%, #bada55, $background 40%) bottom center no-repeat;
-            background-size:200% 20px;
-         } */
 }
-/* line 150, ../../app/styles/main.scss */
+/* line 160, ../../app/styles/main.scss */
 .page .viewport.resizing {
-  transition: top 10ms ease-in-out, bottom 10ms ease-in-out;
+  transition: top 1ms ease-in-out, bottom 1ms ease-in-out;
 }
-/* line 158, ../../app/styles/main.scss */
+/* line 168, ../../app/styles/main.scss */
 .page .viewport-resizer {
   position: absolute;
   margin: 0 .5rem;
@@ -318,23 +330,23 @@ body {
   font-weight: bold;
   background: rgba(241, 241, 241, 0.5);
 }
-/* line 171, ../../app/styles/main.scss */
+/* line 181, ../../app/styles/main.scss */
 .page .viewport-resizer:hover, .page .viewport-resizer.resizing {
   color: #7f7f7f;
   background: #f1f1f1;
 }
-/* line 177, ../../app/styles/main.scss */
+/* line 187, ../../app/styles/main.scss */
 .page .viewport-resizer-top {
   top: -3rem;
   padding: .5rem 2rem 0 2rem;
 }
-/* line 182, ../../app/styles/main.scss */
+/* line 192, ../../app/styles/main.scss */
 .page .viewport-resizer-bottom {
   bottom: -3rem;
   padding: 0 2rem .5rem 2rem;
 }
 
-/* line 192, ../../app/styles/main.scss */
+/* line 202, ../../app/styles/main.scss */
 .candidate-node-highlight {
   position: relative;
   background: rgba(127, 127, 127, 0.2);
@@ -342,7 +354,7 @@ body {
   cursor: crosshair;
   outline: 1px dashed #7f7f7f;
 }
-/* line 202, ../../app/styles/main.scss */
+/* line 212, ../../app/styles/main.scss */
 .candidate-node-highlight div:hover, .candidate-node-highlight p:hover, .candidate-node-highlight img:hover, .candidate-node-highlight table:hover, .candidate-node-highlight blockquote:hover,
 .candidate-node-highlight ul:hover, .candidate-node-highlight ol:hover, .candidate-node-highlight dl:hover, .candidate-node-highlight h1:hover, .candidate-node-highlight h2:hover, .candidate-node-highlight h3:hover, .candidate-node-highlight h4:hover,
 .candidate-node-highlight h5:hover, .candidate-node-highlight h6:hover, .candidate-node-highlight code:hover, .candidate-node-highlight main:hover, .candidate-node-highlight header:hover, .candidate-node-highlight footer:hover,

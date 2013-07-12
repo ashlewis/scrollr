@@ -46,7 +46,7 @@ function ($, Utils, App, Dom, Swap) {
             //if (e.propertyName === 'top' && !Utils.hasClass(e.srcElement, 'resizing')) {
                // Dom.getViewport().style.bottom = window.innerHeight - (Utils.snap(Dom.getViewport().offsetTop, Dom.getLineHeight()) + Utils.snap(Dom.getViewport().offsetHeight, Dom.getLineHeight())) +'px';
 
-            }
+           // }
         //}
 
     },

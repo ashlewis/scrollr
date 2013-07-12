@@ -220,7 +220,6 @@ define(
                         viewportBottomOrigin = Utils.snap(Utils.getOffsetBottom(Dom.getViewport()), Dom.getLineHeight());
 
                     doDrag(Dom.getViewportResizerTop(), -Dom.getLineHeight(), viewportTopOrigin, viewportBottomOrigin);
-
                     break;
 
                 case KEY_DOWN_ARROW:

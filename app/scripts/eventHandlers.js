@@ -5,73 +5,110 @@ function ($, Utils, App, Dom, Swap) {
 
     var
 
+    /**
+    * @param {Event} e
+    */
     handleBodyMouseWheel = function(e){
         e.preventDefault();
         App.wheelMove(e.wheelDelta);
     },
 
+    /**
+    * @param {Event} e
+    */
     handleBodyKeyDown = function(e){
         App.keyPress(e);
     },
 
+    /**
+    * @param {Event} e
+    */
     handleResizerMouseDown = function(e){
         e.preventDefault();
         App.initDrag(e.clientY, this);
     },
 
+    /**
+    * @param {Event} e
+    */
     handleWindowMouseUp = function(e){
         App.stopDrag(e);
     },
 
+    /**
+    * @param {Event} e
+    */
     handleWindowResize = function(){
         Dom.resetViewport();
     },
 
+    /**
+    * @param {Event} e
+    */
     handleWindowScroll = function(e){
         App.fixScrollTop();
     },
 
+    /**
+    * @param {string} propertyName - transitioned css property
+    */
     isCloseTransition = function(propertyName){
         return (propertyName === 'top' && Dom.getViewport().style.top === '0px');
     },
 
+    /**
+    * @param {Event} e
+    */
     handleViewportTransitionEnd = function(e){
 
         if (isCloseTransition(e.propertyName)) {
             Swap.reset();
 
         }
-
-        //if (Dom.getViewport().offsetTop >= 3*Dom.getLineHeight()) {
-            //if (e.propertyName === 'top' && !Utils.hasClass(e.srcElement, 'resizing')) {
-               // Dom.getViewport().style.bottom = window.innerHeight - (Utils.snap(Dom.getViewport().offsetTop, Dom.getLineHeight()) + Utils.snap(Dom.getViewport().offsetHeight, Dom.getLineHeight())) +'px';
-
-           // }
-        //}
+        Dom.getPage().style.paddingTop = Dom.getViewport().offsetTop + 'px';
+        Dom.getPage().style.paddingBottom = Utils.getOffsetBottom(Dom.getViewport()) + 'px';
 
     },
 
+    /**
+    *
+    */
     handleUpClick = function(){
         App.scrollUp();
     },
 
+    /**
+    *
+    */
     handleDownClick = function(){
         App.scrollDown();
     },
 
+    /**
+    *
+    */
     handleStepUpClick = function(){
         App.scrollUp(Dom.getLineHeight());
     },
 
+    /**
+    *
+    */
     handleStepDownClick = function(){
         App.scrollDown(Dom.getLineHeight());
     },
 
+    /**
+    *
+    */
     handleCloseClick = function(){
         App.readingModeOff();
         unBindReadingModeEvents();
     },
 
+    /**
+    *
+    */
     unBindReadingModeEvents = function(){
 
         document.body.removeEventListener('mousewheel', handleBodyMouseWheel);
@@ -79,18 +116,15 @@ function ($, Utils, App, Dom, Swap) {
 
         window.removeEventListener('mouseup', handleWindowMouseUp);
 
+        $(window).off('resize', handleWindowResize);
 
-        //non-jquery version does not remove eventListener
-          //window.removeEventListener('resize', resetViewport, true);
-          $(window).off('resize', handleWindowResize);
-
-          //non-jquery version does not remove eventListener
-          //window.removeEventListener('scroll', fixScrollTop);
-          $(window).off('scroll', handleWindowScroll);
-
+        $(window).off('scroll', handleWindowScroll);
 
     },
 
+    /**
+    *
+    */
     bindReadingModeEvents = function(){
         document.body.addEventListener('mousewheel', handleBodyMouseWheel);
         document.body.addEventListener('keydown', handleBodyKeyDown);
@@ -99,10 +133,8 @@ function ($, Utils, App, Dom, Swap) {
         Dom.getViewportResizerBottom().addEventListener('mousedown', handleResizerMouseDown);
         window.addEventListener('mouseup', handleWindowMouseUp);
 
-        //window.addEventListener('resize', $.debounce( 250, resetViewport));
         $(window).on('resize', $.debounce( 250, handleWindowResize));
 
-        //window.addEventListener('scroll', $.debounce( 250, fixScrollTop));
         $(window).on('scroll', $.debounce( 250, handleWindowScroll));
 
         Dom.getViewport().addEventListener('transitionend', handleViewportTransitionEnd);
@@ -114,17 +146,25 @@ function ($, Utils, App, Dom, Swap) {
         Dom.getCloseButton().addEventListener('click', handleCloseClick);
     },
 
+    /**
+    *
+    */
     candidateNodeClickHandler = function(e){
 
         App.readingModeOn(e.detail.target, e.detail.node);
         bindReadingModeEvents();
     },
 
-
+    /**
+    *
+    */
     bindNonReadingModeEvents = function(){
         document.body.addEventListener('candidateNodeClick', candidateNodeClickHandler);
     },
-
+    
+    /**
+    *
+    */
     init = function(){
         bindNonReadingModeEvents();
     };

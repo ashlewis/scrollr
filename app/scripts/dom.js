@@ -18,8 +18,11 @@ define(['utils'], function(Utils) {
         stepUpButton : false,
         stepDownButton : false,
         closeButton : false,
-        pageLineHeight:false
+        pageLineHeight:false,
+        controlGroup:false
       },
+
+
 
       /**
       *
@@ -112,6 +115,37 @@ define(['utils'], function(Utils) {
         return viewportResizer;
       },
 
+       /**
+      *
+      */
+      createControlGroup = function(){
+        var controlGroup = document.createElement('div');
+
+        controlGroup.className = 'control-group';
+
+        controlGroup.appendChild(getViewportResizerTop());
+        controlGroup.appendChild(getViewportResizerBottom());
+        controlGroup.appendChild(getCloseButton());
+        controlGroup.appendChild(getUpButton());
+        controlGroup.appendChild(getDownButton());
+        controlGroup.appendChild(getStepUpButton());
+        controlGroup.appendChild(getStepDownButton());
+
+        return controlGroup;
+      },
+
+      /**
+      *
+      */
+      getControlGroup = function(){
+
+        if (!DOM.controlGroup) {
+          DOM.controlGroup = createControlGroup();
+        }
+
+        return DOM.controlGroup;
+      },
+
       /**
       *
       */
@@ -120,14 +154,8 @@ define(['utils'], function(Utils) {
         var viewport = document.createElement('div');
 
         viewport.className = 'viewport';
-
-        viewport.appendChild(getViewportResizerTop());
-        viewport.appendChild(getViewportResizerBottom());
-        viewport.appendChild(getCloseButton());
-        viewport.appendChild(getUpButton());
-        viewport.appendChild(getDownButton());
-        viewport.appendChild(getStepUpButton());
-        viewport.appendChild(getStepDownButton());
+        viewport.appendChild(getControlGroup());
+        
 
         return viewport;
       },
@@ -154,7 +182,6 @@ define(['utils'], function(Utils) {
         }
 
         return DOM.page;
-
       },
 
       /**
@@ -191,10 +218,11 @@ define(['utils'], function(Utils) {
       /**
       *
       */
-      resetViewport = function(){
-        getViewport().style.height = 'auto';
+      resetViewport = function(){       
+        //getViewport().style.height = 'auto';
         getViewport().style.top = 3*getLineHeight() +'px';
-        getViewport().style.bottom = 3*getLineHeight() +'px';
+        //getViewport().style.bottom = (window.innerHeight - Utils.snap(window.innerHeight - 3*getLineHeight(), getLineHeight()))  +'px';
+        getViewport().style.bottom = ($(window).height() - Utils.snap($(window).height() - 4*getLineHeight(), getLineHeight()))  +'px';
       },
 
        /**

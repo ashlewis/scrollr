@@ -46,7 +46,7 @@ define([], function () {
      * @return {int}    [description]
      */
     getOffsetBottom = function(el) {
-        return window.innerHeight - (el.offsetTop + el.offsetHeight)
+        return $(window).height() - (el.offsetTop + el.offsetHeight)
     },
 
     /**

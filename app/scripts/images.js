@@ -5,6 +5,8 @@ define(['dom', 'utils'], function(Dom, Utils) {
 
     var
 
+    // todo: remove inline width and height?
+
     baseLineImages = function(){
 
         $(document).waitForImages(

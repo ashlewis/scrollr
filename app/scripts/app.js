@@ -52,6 +52,7 @@ define(
             };
 
 
+
         },
 
       doDrag = function(resizer, delta, viewportTopOrigin, viewportBottomOrigin){
@@ -60,10 +61,13 @@ define(
             delta = -delta;
         }
 
-        if (Dom.getViewport().offsetTop >= 3*Dom.getLineHeight()) {
-            Dom.getViewport().style.height = 'auto';
+        if (delta >= 0 && Dom.getViewport().offsetHeight > 3*Dom.getLineHeight() ||
+              delta < 0 && Dom.getViewport().offsetTop > 3*Dom.getLineHeight()) {
+
             Dom.getViewport().style.top = (viewportTopOrigin + delta) + 'px';
+            Dom.getPage().style.paddingTop = (viewportTopOrigin + delta) + 'px';
             Dom.getViewport().style.bottom = (viewportBottomOrigin + delta) + 'px';
+            Dom.getPage().style.paddingBottom = (viewportBottomOrigin + delta) + 'px';
 
         }
 
@@ -79,14 +83,20 @@ define(
           Utils.removeClass(Dom.getViewportResizerBottom(), 'resizing');
 
           Dom.getViewport().style.top = Utils.snap(Dom.getViewport().offsetTop, Dom.getLineHeight()) + 'px';
-          Dom.getViewport().style.bottom = window.innerHeight - (Utils.snap(Dom.getViewport().offsetTop, Dom.getLineHeight()) + Utils.snap(Dom.getViewport().offsetHeight, Dom.getLineHeight())) +'px';
+          
+          Dom.getViewport().style.bottom = $(window).height() - (Utils.snap(Dom.getViewport().offsetTop + Dom.getViewport().offsetHeight, Dom.getLineHeight())) +'px';
 
           if (Dom.getViewport().offsetTop < 3*Dom.getLineHeight()) {
             Dom.getViewport().style.top = 3*Dom.getLineHeight() + 'px';
           }
 
-          if (Utils.getOffsetBottom(Dom.getViewport()) < 3*Dom.getLineHeight()) {
-            Dom.getViewport().style.bottom = 3*Dom.getLineHeight() + 'px';
+          if (Utils.getOffsetBottom(Dom.getViewport()) < 4*Dom.getLineHeight()) {
+            Dom.getViewport().style.bottom = ($(window).height() - Utils.snap($(window).height() - 4*Dom.getLineHeight(), Dom.getLineHeight()))  +'px';
+          }
+
+          if (Dom.getViewport().offsetHeight < 3*Dom.getLineHeight()) {
+            Dom.getViewport().style.top = Utils.snap($(window).height()/2 - 1.5*Dom.getLineHeight(), Dom.getLineHeight()) + 'px';
+            Dom.getViewport().style.bottom = $(window).height() - (Utils.snap($(window).height()/2 - 1.5*Dom.getLineHeight(), Dom.getLineHeight()) + 3*Dom.getLineHeight()) + 'px';
           }
 
       },
@@ -125,6 +135,7 @@ define(
         Dom.getPage().appendChild(Dom.getViewport());
 
         Images.baseLineImages();
+
       },
 
       /**
@@ -156,15 +167,15 @@ define(
 
         var distance = (typeof distance === "undefined") ? Utils.snap((document.body.scrollTop + Dom.getViewport().clientHeight), Dom.getLineHeight()) : Utils.snap((document.body.scrollTop + distance), Dom.getLineHeight());
 
-        if (distance > (Dom.getPage().clientHeight - window.innerHeight)) {
-            distance = Math.floor((Dom.getPage().clientHeight - window.innerHeight) / Dom.getLineHeight()) * Dom.getLineHeight();
+        if (distance > (Dom.getPage().clientHeight - $(window).height())) {
+            distance = Math.floor((Dom.getPage().clientHeight - $(window).height()) / Dom.getLineHeight()) * Dom.getLineHeight();
         }
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
 
-        if (distance + Dom.getLineHeight() + window.innerHeight >= Dom.getPage().clientHeight && Dom.getViewport().style.top != 3*Dom.getLineHeight() +'px') {
-           Dom.resetViewport();
-        }
+//        if (distance + Dom.getLineHeight() + $(window).height() >= Dom.getPage().clientHeight && Dom.getViewport().style.top != 3*Dom.getLineHeight() +'px') {
+//           Dom.resetViewport();
+//        }
       },
 
       /**
@@ -176,9 +187,9 @@ define(
 
         $('body').animate({ scrollTop: distance }, 250, 'easeOutCirc', scrollComplete);
 
-        if (distance <= 0 && Dom.getViewport().style.top != 3*Dom.getLineHeight() +'px') {
-            Dom.resetViewport();
-        }
+//        if (distance <= 0 && Dom.getViewport().style.top != 3*Dom.getLineHeight() +'px') {
+//            Dom.resetViewport();
+//        }
 
       },
 
@@ -217,7 +228,7 @@ define(
                 case KEY_UP_ARROW:
                     e.preventDefault();
                     var viewportTopOrigin = Dom.getViewport().offsetTop,
-                        viewportBottomOrigin = Utils.snap(Utils.getOffsetBottom(Dom.getViewport()), Dom.getLineHeight());
+                        viewportBottomOrigin = Utils.getOffsetBottom(Dom.getViewport());
 
                     doDrag(Dom.getViewportResizerTop(), -Dom.getLineHeight(), viewportTopOrigin, viewportBottomOrigin);
                     break;
@@ -225,7 +236,7 @@ define(
                 case KEY_DOWN_ARROW:
                     e.preventDefault();
                     var viewportTopOrigin = Dom.getViewport().offsetTop,
-                        viewportBottomOrigin = Utils.snap(Utils.getOffsetBottom(Dom.getViewport()), Dom.getLineHeight());
+                        viewportBottomOrigin = Utils.getOffsetBottom(Dom.getViewport());
 
                     doDrag(Dom.getViewportResizerTop(), Dom.getLineHeight(), viewportTopOrigin, viewportBottomOrigin);
                     break;

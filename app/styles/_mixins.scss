@@ -4,6 +4,6 @@
 @mixin font($factor:1){
     font-size: $factor*$defaultFontSize;
     line-height: ceil($factor*$defaultFontSize/$defaultLineHeight) * $defaultLineHeight;
-    margin-top:$defaultLineHeight;
-    margin-bottom:0;
+    margin-top:0;
+    margin-bottom:$defaultLineHeight;
 }

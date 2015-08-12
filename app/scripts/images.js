@@ -13,17 +13,24 @@ define(['dom', 'utils'], function(Dom, Utils) {
 
             // all loaded
             function(){
+
+                $('img').baseline(Dom.getLineHeight());
+
                 document.body.scrollTop = Utils.snap(document.querySelector('.target').offsetTop - 3*Dom.getLineHeight(), Dom.getLineHeight());
 
+
                 Dom.resetViewport();
-            },
 
-            // each image
-            function () {
+                
+            }/*
 
-                $(this).baseline(Dom.getLineHeight());
+             This no longer appears do work?? - so replaced with "$('img').baseline(Dom.getLineHeight());" above
 
-            }
+             // each image
+             function(){                
+                 $(this).baseline(Dom.getLineHeight());
+
+            }*/
         );
     };
 

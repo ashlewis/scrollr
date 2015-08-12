@@ -24,6 +24,7 @@ require.config({
         },
 
         throttleDebounce :{
+            deps: ['jquery'],
             exports: 'jquery'
         }
     }

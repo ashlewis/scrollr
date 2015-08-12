@@ -2,7 +2,7 @@ require.config({
     paths: {
         jquery: '../components/jquery/jquery',
         jqueryui: '../components/jquery-ui/ui/jquery.ui.effect',
-        baseline: '../components/Baseline.js/jquery.baseline',
+        baseline: '../components/Baseline.js/baseline',
         waitForImages: '../components/waitForImages/dist/jquery.waitforimages',
         domReady: '../components/requirejs-domready/domReady',
         throttleDebounce: '../components/jquery-throttle-debounce/jquery.ba-throttle-debounce'

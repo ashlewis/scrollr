@@ -39,17 +39,17 @@ define(
             Utils.addClass(Dom.getViewportResizerTop(), 'resizing');
             Utils.addClass(Dom.getViewportResizerBottom(), 'resizing');
 
-           // document.onmousemove = $.throttle(100, function(e){
-           //     e.preventDefault();
-           //     var delta = e.clientY - mouseOrigin;
-           //     doDrag(resizer, delta, viewportTopOrigin, viewportBottomOrigin);
-           // });
+           document.onmousemove = $.throttle(100, function(e){
+               e.preventDefault();
+               var delta = e.clientY - mouseOrigin;
+               doDrag(resizer, delta, viewportTopOrigin, viewportBottomOrigin);
+           });
 
-            document.onmousemove = function(e){
-                e.preventDefault();
-                var delta = e.clientY - mouseOrigin;
-                doDrag(resizer, delta, viewportTopOrigin, viewportBottomOrigin);
-            };
+            // document.onmousemove = function(e){
+            //     e.preventDefault();
+            //     var delta = e.clientY - mouseOrigin;
+            //     doDrag(resizer, delta, viewportTopOrigin, viewportBottomOrigin);
+            // };
 
 
 

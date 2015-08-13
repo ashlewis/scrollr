@@ -144,6 +144,7 @@ module.exports = function (grunt) {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
                 options: {
                     // `name` and `out` is set by grunt-usemin
+                    dir: 'dist',
                     baseUrl: 'app/scripts',
                     optimize: 'none',
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
@@ -160,8 +161,9 @@ module.exports = function (grunt) {
             }
         },
         useminPrepare: {
-            html: '<%= yeoman.app %>/index.html',
+            html: 'index.html',
             options: {
+                root: '<%= yeoman.app %>',
                 dest: '<%= yeoman.dist %>'
             }
         },
@@ -244,7 +246,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
-            'coffee:dist',
+            //'coffee:dist',
             'compass:server',
             'livereload-start',
             'connect:livereload',
@@ -263,9 +265,9 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'jshint',
-        'test',
-        'coffee',
+        //'jshint',
+        //'test',
+        //'coffee',
         'compass:dist',
         'useminPrepare',
         'requirejs',

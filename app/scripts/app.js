@@ -11,14 +11,14 @@ define(
     'baseline',
     'waitForImages',
     'domReady!'
-  ],
+],
   function (
       $,
       Utils,
       Dom,
       Swap,
       Images
-  ){
+  ) {
 
     'use strict';
 

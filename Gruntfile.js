@@ -17,14 +17,6 @@ module.exports = function (grunt) {
     grunt.initConfig({
         yeoman: yeomanConfig,
         watch: {
-            coffee: {
-                files: ['<%= yeoman.app %>/scripts/*.coffee'],
-                tasks: ['coffee:dist']
-            },
-            coffeeTest: {
-                files: ['test/spec/*.coffee'],
-                tasks: ['coffee:test']
-            },
             compass: {
                 files: ['<%= yeoman.app %>/styles/*.{scss,sass}'],
                 tasks: ['compass']
@@ -51,16 +43,6 @@ module.exports = function (grunt) {
                             lrSnippet,
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, 'app')
-                        ];
-                    }
-                }
-            },
-            test: {
-                options: {
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, 'test')
                         ];
                     }
                 }
@@ -94,29 +76,6 @@ module.exports = function (grunt) {
                 'test/spec/*.js'
             ]
         },
-        mocha: {
-            all: {
-                options: {
-                    run: true,
-                    urls: ['http://localhost:<%= connect.options.port %>/index.html']
-                }
-            }
-        },
-        coffee: {
-            dist: {
-                files: {
-                    '.tmp/scripts/coffee.js': '<%= yeoman.app %>/scripts/*.coffee'
-                }
-            },
-            test: {
-                files: [{
-                    expand: true,
-                    cwd: '.tmp/spec',
-                    src: '*.coffee',
-                    dest: 'test/spec'
-                }]
-            }
-        },
         compass: {
             options: {
                 sassDir: '<%= yeoman.app %>/styles',
@@ -144,9 +103,9 @@ module.exports = function (grunt) {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
                 options: {
                     // `name` and `out` is set by grunt-usemin
-                    dir: 'dist',
+                    dir: 'dist/scripts',
                     baseUrl: 'app/scripts',
-                    optimize: 'none',
+                    optimize: 'uglify',
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
                     // https://github.com/yeoman/grunt-usemin/issues/30
                     //generateSourceMaps: true,
@@ -156,7 +115,13 @@ module.exports = function (grunt) {
                     useStrict: true,
                     wrap: true,
                     //uglify2: {} // https://github.com/mishoo/UglifyJS2
-                    mainConfigFile: 'app/scripts/main.js'
+                    mainConfigFile: 'app/scripts/main.js',
+                    // remove all combined scripts from compiled
+                    removeCombined: true,
+
+                    keepBuildDir:true,
+                    name: 'main'
+
                 }
             }
         },
@@ -168,9 +133,10 @@ module.exports = function (grunt) {
             }
         },
         usemin: {
-            html: ['<%= yeoman.dist %>/*.html'],
-            css: ['<%= yeoman.dist %>/styles/*.css'],
+            html: ['*.html'],
+            css: ['*.css'],
             options: {
+                root: '<%= yeoman.dist %>',
                 dirs: ['<%= yeoman.dist %>']
             }
         },
@@ -274,8 +240,8 @@ module.exports = function (grunt) {
         'imagemin',
         'cssmin',
         'htmlmin',
-        'concat',
-        'uglify',
+        //'concat',
+        //'uglify',
         'copy',
         'usemin'
     ]);
